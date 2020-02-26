@@ -187,7 +187,7 @@ static int cmd_info(char *args) {
     printf("To be implemented...\n");
   }
   else {
-  	printf("Undefined info command: \"%s\".  Try \"help info\".\n", args);
+  	printf("Undefined info command: \"%s\".  Try \"help info\".\n", arg);
   }
   return 0;
 }
