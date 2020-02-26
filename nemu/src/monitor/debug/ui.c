@@ -74,6 +74,11 @@ static int cmd_help(char *args) {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
         printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
+        if (strcmp(arg, "info") == 0) {
+        	printf("List of info subcommands:\n\n");
+    		printf("info r -- List of integer registers and their contents\n");
+    		printf("info w -- Status of specified watchpoints (all watchpoints if no argument)\n");
+        }
         return 0;
       }
     }
