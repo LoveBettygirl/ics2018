@@ -166,7 +166,7 @@ static int cmd_x(char *args) {
       	mem_data = vaddr_read(start_addr, 4);
       	uint32_t d;
       	for (d = 0; d < 4; d++) {
-      		printf("%02x ", (mem_data & 0x000000ff));
+      		printf("%02x    ", (mem_data & 0x000000ff));
       		mem_data >>= 8;
       	}
       	printf("\n");
