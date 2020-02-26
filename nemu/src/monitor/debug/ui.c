@@ -122,31 +122,17 @@ static int cmd_info(char *args) {
     printf("info w -- Status of specified watchpoints (all watchpoints if no argument)\n");
   }
   else if (strcmp(arg, "r") == 0) {
-    printf("eax\t0x%x\t%d\n", reg_l(R_EAX), reg_l(R_EAX));
-    printf("ecx\t0x%x\t%d\n", reg_l(R_ECX), reg_l(R_ECX));
-    printf("edx\t0x%x\t%d\n", reg_l(R_EDX), reg_l(R_EDX));
-    printf("ebx\t0x%x\t%d\n", reg_l(R_EBX), reg_l(R_EBX));
-    printf("esp\t0x%x\t%d\n", reg_l(R_ESP), reg_l(R_ESP));
-    printf("ebp\t0x%x\t%d\n", reg_l(R_EBP), reg_l(R_EBP));
-    printf("esi\t0x%x\t%d\n", reg_l(R_ESI), reg_l(R_ESI));
-    printf("edi\t0x%x\t%d\n", reg_l(R_EDI), reg_l(R_EDI));
+  	uint32_t i;
+  	for (i = 0; i < 8 ; i++) {
+  		printf("%s\t0x%x\t%d\n", reg_name(i, 4), reg_l(i), reg_l(i));
+  	}
     printf("eip\t0x%x\t%d\n", cpu.eip, cpu.eip);
-    printf("ax\t0x%x\t%d\n", reg_w(R_AX), reg_w(R_AX));
-    printf("cx\t0x%x\t%d\n", reg_w(R_CX), reg_w(R_CX));
-    printf("dx\t0x%x\t%d\n", reg_w(R_DX), reg_w(R_DX));
-    printf("bx\t0x%x\t%d\n", reg_w(R_BX), reg_w(R_BX));
-    printf("sp\t0x%x\t%d\n", reg_w(R_SP), reg_w(R_SP));
-    printf("bp\t0x%x\t%d\n", reg_w(R_BP), reg_w(R_BP));
-    printf("si\t0x%x\t%d\n", reg_w(R_SI), reg_w(R_SI));
-    printf("di\t0x%x\t%d\n", reg_w(R_DI), reg_w(R_DI));
-    printf("al\t0x%x\t%d\n", reg_b(R_AL), reg_b(R_AL));
-    printf("cl\t0x%x\t%d\n", reg_b(R_CL), reg_b(R_CL));
-    printf("dl\t0x%x\t%d\n", reg_b(R_DL), reg_b(R_DL));
-    printf("bl\t0x%x\t%d\n", reg_b(R_BL), reg_b(R_BL));
-    printf("ah\t0x%x\t%d\n", reg_b(R_AH), reg_b(R_AH));
-    printf("ch\t0x%x\t%d\n", reg_b(R_CH), reg_b(R_CH));
-    printf("dh\t0x%x\t%d\n", reg_b(R_DH), reg_b(R_DH));
-    printf("bh\t0x%x\t%d\n", reg_b(R_BH), reg_b(R_BH));
+    for (i = 0; i < 8 ; i++) {
+  		printf("%s\t0x%x\t%d\n", reg_name(i, 2), reg_w(i), reg_w(i));
+  	}
+  	for (i = 0; i < 8 ; i++) {
+  		printf("%s\t0x%x\t%d\n", reg_name(i, 1), reg_b(i), reg_b(i));
+  	}
   }
   else if (strcmp(arg, "w") == 0) {
     printf("To be implemented...\n");
@@ -176,7 +162,7 @@ static int cmd_x(char *args) {
       sscanf(temp1, "%x", &start_addr);
       uint32_t i;
       for (i = 0; i < n ; i++) {
-      	printf("0x%x:\t", start_addr);
+      	printf("0x%x:    ", start_addr);
       	mem_data = vaddr_read(start_addr, 4);
       	uint32_t d;
       	for (d = 0; d < 4; d++) {
