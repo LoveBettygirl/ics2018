@@ -148,9 +148,13 @@ static int cmd_info(char *args) {
     				break;
     			}
     		}
+    		if (find) {
+    			continue;
+    		}
     		if (strcmp("eip", temp) == 0) {
     			printf("eip\t0x%x\t%d\n", cpu.eip, cpu.eip);
     			find = 1;
+    			continue;
     		}
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 4), temp) == 0) {
@@ -158,6 +162,9 @@ static int cmd_info(char *args) {
     				find = 1;
     				break;
     			}
+    		}
+    		if (find) {
+    			continue;
     		}
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 4), temp) == 0) {
