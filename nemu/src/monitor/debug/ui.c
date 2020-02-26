@@ -144,7 +144,7 @@ static int cmd_info(char *args) {
     printf("bh\t0x%x\t%d\n", reg_b(R_BH), reg_b(R_BH));
   }
   else if (strcmp(arg, "w") == 0) {
-    printf("To be implemented...");
+    printf("To be implemented...\n");
   }
   else {
   	printf("Undefined info command: \"%s\".  Try \"help info\".\n", arg);
