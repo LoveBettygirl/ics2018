@@ -140,7 +140,6 @@ static int cmd_info(char *args) {
     	uint32_t i;
     	uint32_t find = 0;
     	while (temp != NULL) {
-    		temp = strtok(NULL, " ");
     		find = 0;
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 4), temp) == 0) {
@@ -150,11 +149,13 @@ static int cmd_info(char *args) {
     			}
     		}
     		if (find) {
+    			temp = strtok(NULL, " ");
     			continue;
     		}
     		if (strcmp("eip", temp) == 0) {
     			printf("eip\t0x%x\t%d\n", cpu.eip, cpu.eip);
     			find = 1;
+    			temp = strtok(NULL, " ");
     			continue;
     		}
     		for (i = 0; i < 8; i++) {
@@ -165,6 +166,7 @@ static int cmd_info(char *args) {
     			}
     		}
     		if (find) {
+    			temp = strtok(NULL, " ");
     			continue;
     		}
     		for (i = 0; i < 8; i++) {
@@ -176,6 +178,7 @@ static int cmd_info(char *args) {
     		}
     		if (!find) {
     			printf("Invalid register `%s'\n", temp);
+    			temp = strtok(NULL, " ");
     		}
     	}
     }
