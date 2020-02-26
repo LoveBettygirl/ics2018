@@ -104,7 +104,6 @@ static int cmd_si(char *args) {
     }
     else {
       printf("Syntax error: Too much arguments\n");
-      return -1;
     }
   }
   return 0;
@@ -175,7 +174,6 @@ static int cmd_x(char *args) {
     }
     else {
       printf("Syntax error: Too much arguments\n");
-      //return -1;
     }
   }
   return 0;
