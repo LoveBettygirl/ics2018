@@ -130,10 +130,10 @@ static int cmd_info(char *args) {
   		}
     	printf("eip\t0x%x\t%d\n", cpu.eip, cpu.eip);
     	for (i = 0; i < 8 ; i++) {
-  			printf("%s\t0x%x\t%d\n", reg_name(i, 2), reg_w(i), reg_w(i));
+  			printf("%s\t0x%x\t%hd\n", reg_name(i, 2), reg_w(i), reg_w(i));
   		}
   		for (i = 0; i < 8 ; i++) {
-  			printf("%s\t0x%x\t%d\n", reg_name(i, 1), reg_b(i), reg_b(i));
+  			printf("%s\t0x%x\t%hhd\n", reg_name(i, 1), reg_b(i), reg_b(i));
   		}
     }
     else {
@@ -160,7 +160,7 @@ static int cmd_info(char *args) {
     		}
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 2), temp) == 0) {
-    				printf("%s\t0x%x\t%d\n", reg_name(i, 2), reg_w(i), reg_w(i));
+    				printf("%s\t0x%x\t%hd\n", reg_name(i, 2), reg_w(i), reg_w(i));
     				find = 1;
     				break;
     			}
@@ -171,7 +171,7 @@ static int cmd_info(char *args) {
     		}
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 1), temp) == 0) {
-    				printf("%s\t0x%x\t%d\n", reg_name(i, 1), reg_b(i), reg_b(i));
+    				printf("%s\t0x%x\t%hhd\n", reg_name(i, 1), reg_b(i), reg_b(i));
     				find = 1;
     				break;
     			}
