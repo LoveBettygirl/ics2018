@@ -116,7 +116,7 @@ static int cmd_info(char *args) {
     printf("info r -- List of integer registers and their contents\n");
     printf("info w -- Status of specified watchpoints (all watchpoints if no argument)\n");
   }
-  else if (strcmp(arg, "r")) {
+  else if (strcmp(arg, "r") == 0) {
     printf("eax\t0x%x\t%d\n", reg_l(R_EAX), reg_l(R_EAX));
     printf("ecx\t0x%x\t%d\n", reg_l(R_ECX), reg_l(R_ECX));
     printf("edx\t0x%x\t%d\n", reg_l(R_EDX), reg_l(R_EDX));
@@ -143,7 +143,7 @@ static int cmd_info(char *args) {
     printf("dh\t0x%x\t%d\n", reg_b(R_DH), reg_b(R_DH));
     printf("bh\t0x%x\t%d\n", reg_b(R_BH), reg_b(R_BH));
   }
-  else if (strcmp(arg, "w")) {
+  else if (strcmp(arg, "w") == 0) {
     printf("To be implemented...");
   }
   else {
