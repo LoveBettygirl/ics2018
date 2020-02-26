@@ -85,7 +85,7 @@ static int cmd_help(char *args) {
 static int cmd_si(char *args) {
   /* extract the first argument */
   char *arg = strtok(NULL, " ");
-  uint32_t n = 0;
+  uint64_t n = 0;
 
   if (arg == NULL) {
     /* no argument given */
@@ -94,7 +94,7 @@ static int cmd_si(char *args) {
   else {
     char *temp = strtok(NULL, " ");
     if (temp == NULL) {
-      sscanf(arg, "%u", &n);
+      sscanf(arg, "%llu", &n);
       cpu_exec(n); // Execute n times
     }
     else {
