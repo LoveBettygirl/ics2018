@@ -178,8 +178,8 @@ static int cmd_info(char *args) {
     		}
     		if (!find) {
     			printf("Invalid register `%s'\n", temp);
-    			temp = strtok(NULL, " ");
     		}
+    		temp = strtok(NULL, " ");
     	}
     }
   }
