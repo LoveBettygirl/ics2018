@@ -140,6 +140,7 @@ static int cmd_info(char *args) {
     	uint32_t i;
     	uint32_t find = 0;
     	while (temp != NULL) {
+    		temp = strtok(NULL, " ");
     		find = 0;
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 4), temp) == 0) {
@@ -176,7 +177,6 @@ static int cmd_info(char *args) {
     		if (!find) {
     			printf("Invalid register `%s'\n", temp);
     		}
-    		temp = strtok(NULL, " ");
     	}
     }
   }
