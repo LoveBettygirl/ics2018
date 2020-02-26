@@ -111,16 +111,16 @@ static int cmd_si(char *args) {
 
 static int cmd_info(char *args) {
   /* extract the first argument */
-  char *arg = strtok(NULL, " ");
+  //char *arg = strtok(NULL, " ");
 
-  if (arg == NULL) {
+  if (args == NULL) {
     /* no argument given, show rules */
     printf("\"info\" must be followed by the name of an info command.\n");
     printf("List of info subcommands:\n\n");
     printf("info r -- List of integer registers and their contents\n");
     printf("info w -- Status of specified watchpoints (all watchpoints if no argument)\n");
   }
-  else if (strcmp(arg, "r") == 0) {
+  else if (strcmp(args, "r") == 0) {
   	uint32_t i;
   	for (i = 0; i < 8 ; i++) {
   		printf("%s\t0x%x\t%d\n", reg_name(i, 4), reg_l(i), reg_l(i));
@@ -133,7 +133,7 @@ static int cmd_info(char *args) {
   		printf("%s\t0x%x\t%d\n", reg_name(i, 1), reg_b(i), reg_b(i));
   	}
   }
-  else if (strcmp(arg, "w") == 0) {
+  else if (strcmp(args, "w") == 0) {
     printf("To be implemented...\n");
   }
   else {
