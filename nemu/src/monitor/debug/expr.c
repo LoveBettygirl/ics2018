@@ -7,7 +7,8 @@
 #include <regex.h>
 
 enum {
-  TK_NOTYPE = 256, TK_EQ
+  TK_NOTYPE = 256, TK_EQ, TK_DECINT, TK_HEXINT, TK_PLUS, TK_MINUS, 
+  TK_TIMES, TK_DIV, TK_LPAREN, TK_RPAREN, TK_REG
 
   /* TODO: Add more token types */
 
@@ -22,9 +23,17 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {" +", TK_NOTYPE},    // spaces
-  {"\\+", '+'},         // plus
-  {"==", TK_EQ}         // equal
+  {" +", TK_NOTYPE},                 // spaces
+  {"==", TK_EQ},                     // equal
+  {"0|[1-9][0-9]*", TK_DECINT},      // decimal integer
+  {"0x[0-9a-fA-F]+", TK_HEXINT},     // hexadecimal integer
+  {"\\+", TK_PLUS},                  // plus
+  {"\\-", TK_MINUS},                 // minus
+  {"\\*", TK_TIMES},                 // times
+  {"\\/", TK_DIV},                   // division
+  {"\\(", TK_LPAREN},                // left parenthesis
+  {"\\)", TK_RPAREN},                // right parenthesis
+  {"\\$[a-z]{2,3}", TK_REG},         // register
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -79,9 +88,25 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        switch (rules[i].token_type) {
-          default: TODO();
-        }
+        /*switch (rules[i].token_type) {
+          TK_NOTYPE:
+            break;
+          TK_EQ:
+          TK_DECINT:
+          TK_HEXINT:
+          TK_PLUS:
+          TK_MINUS:
+          TK_TIMES:
+          TK_DIV:
+          TK_LPAREN:
+          TK_RPAREN:
+          TK_REG:
+            tokens[nr_token].type = rules[i].token_type;
+            strncpy(tokens[nr_token].str, substr_start, substr_len);
+            nr_token++;
+            break;
+          default: panic("Invalid token type");
+        }*/
 
         break;
       }

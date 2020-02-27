@@ -49,9 +49,9 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "Step one instruction exactly", cmd_si },
-  { "info", "Display informations about the program being debugged", cmd_info },
-  { "x", "Examine memory", cmd_x }
+  { "si", "Step [N] instructions exactly, usage: si [N]", cmd_si },
+  { "info", "Display informations about registers and watchpoints in the program being debugged, usage: info r / info w", cmd_info },
+  { "x", "Examine memory, usage: x [N] [EXPR]", cmd_x }
 
   /* TODO: Add more commands */
 
@@ -74,11 +74,6 @@ static int cmd_help(char *args) {
     for (i = 0; i < NR_CMD; i ++) {
       if (strcmp(arg, cmd_table[i].name) == 0) {
         printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
-        if (strcmp(arg, "info") == 0) {
-        	printf("List of info subcommands:\n\n");
-    		printf("info r -- List of integer registers and their contents\n");
-    		printf("info w -- Status of specified watchpoints (all watchpoints if no argument)\n");
-        }
         return 0;
       }
     }
@@ -187,7 +182,7 @@ static int cmd_info(char *args) {
     printf("To be implemented...\n");
   }
   else {
-  	printf("Undefined info command: \"%s\".  Try \"help info\".\n", arg);
+  	printf("Undefined info command: \"%s\"\n", arg);
   }
   return 0;
 }
@@ -209,17 +204,15 @@ static int cmd_x(char *args) {
     if (temp2 == NULL) {
       sscanf(arg, "%u", &n);
       sscanf(temp1, "%x", &start_addr);
-      uint32_t i;
+      uint32_t i, j;
       for (i = 0; i < n ; i++) {
       	printf("0x%x:    ", start_addr);
-      	mem_data = vaddr_read(start_addr, 4);
-      	uint32_t d;
-      	for (d = 0; d < 4; d++) {
-      		printf("%02x    ", (mem_data & 0x000000ff));
-      		mem_data >>= 8;
+      	for (j = 0; j < 4; j++) {
+      		mem_data = vaddr_read(start_addr, 1);
+      		printf("%02x    ", mem_data);
+      		start_addr++;
       	}
       	printf("\n");
-      	start_addr += 4;
       }
     }
     else {
