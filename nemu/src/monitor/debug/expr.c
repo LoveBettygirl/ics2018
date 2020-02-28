@@ -216,6 +216,7 @@ static uint32_t eval(int p, int q) {
     			n = cpu.eip;
     			return n;
     		}
+    		printf("bbb\n");
 		}
 		return n;
 	}
