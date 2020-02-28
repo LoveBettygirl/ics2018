@@ -203,6 +203,7 @@ static uint32_t eval(int p, int q) {
 			sscanf(tokens[p].str, "%x", &n);
 		}
 		else if (tokens[p].type == TK_REG) {
+			printf("aaa\n");
 			uint32_t i;
 			char *str = tokens[p].str + 1;
     		for (i = 0; i < 8; i++) {
