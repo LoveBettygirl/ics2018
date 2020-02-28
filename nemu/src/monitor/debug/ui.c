@@ -234,7 +234,6 @@ static int cmd_p(char *args) {
 	uint32_t result = expr(args, &success);
 	if (success) {
 		printf("result = %u\n", result);
-		printf("Illegal expression.\n");
 	}
 	else {
 		printf("Illegal expression.\n");
