@@ -223,7 +223,7 @@ static uint32_t eval(int p, int q) {
 	}
 	else {
 		int op = dominant_operator(p, q);
-		printf("%s\n", tokens[op].str);
+		printf("%d, %s\n", op, tokens[op].str);
 		uint32_t val1 = eval(p, op - 1);
 		uint32_t val2 = eval(op + 1, q);
 		switch (tokens[op].type) {
