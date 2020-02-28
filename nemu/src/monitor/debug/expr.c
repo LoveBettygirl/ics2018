@@ -209,7 +209,6 @@ static uint32_t eval(int p, int q) {
 			char *str = tokens[p].str + 1;
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 4), str) == 0) {
-    				printf("%s\n", reg_name(i, 4));
     				n = reg_l(i);
     				return n;
     			}
