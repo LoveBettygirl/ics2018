@@ -88,25 +88,25 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        /*switch (rules[i].token_type) {
-          TK_NOTYPE:
+        switch (rules[i].token_type) {
+          case TK_NOTYPE:
             break;
-          TK_EQ:
-          TK_DECINT:
-          TK_HEXINT:
-          TK_PLUS:
-          TK_MINUS:
-          TK_TIMES:
-          TK_DIV:
-          TK_LPAREN:
-          TK_RPAREN:
-          TK_REG:
+          case TK_EQ:
+          case TK_DECINT:
+          case TK_HEXINT:
+          case TK_PLUS:
+          case TK_MINUS:
+          case TK_TIMES:
+          case TK_DIV:
+          case TK_LPAREN:
+          case TK_RPAREN:
+          case TK_REG:
             tokens[nr_token].type = rules[i].token_type;
             strncpy(tokens[nr_token].str, substr_start, substr_len);
             nr_token++;
             break;
           default: panic("Invalid token type");
-        }*/
+        }
 
         break;
       }
