@@ -226,6 +226,7 @@ static uint32_t eval(int p, int q) {
 		printf("%d, %s\n", op, tokens[op].str);
 		uint32_t val1 = eval(p, op - 1);
 		uint32_t val2 = eval(op + 1, q);
+		printf("%u, %u\n", val1, val2);
 		switch (tokens[op].type) {
 		  case TK_PLUS: return val1 + val2;
 		  case TK_MINUS: return val1 - val2;
