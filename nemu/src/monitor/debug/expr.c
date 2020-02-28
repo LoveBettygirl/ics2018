@@ -96,7 +96,7 @@ static bool make_token(char *e) {
 
         if (rules[i].token_type != TK_NOTYPE) {
           tokens[nr_token].type = rules[i].token_type;
-          //memset(tokens[nr_token].str, 0, sizeof(tokens[nr_token].str));
+          memset(tokens[nr_token].str, 0, sizeof(tokens[nr_token].str));
           strncpy(tokens[nr_token].str, substr_start, substr_len);
           tokens[nr_token].str[substr_len] = '\0';
           nr_token++;
@@ -205,10 +205,8 @@ static uint32_t eval(int p, int q) {
 			sscanf(tokens[p].str, "%x", &n);
 		}
 		else if (tokens[p].type == TK_REG) {
-			printf("aaa\n");
 			uint32_t i;
 			char *str = tokens[p].str + 1;
-			printf("%s\n", str);
     		for (i = 0; i < 8; i++) {
     			if (strcmp(reg_name(i, 4), str) == 0) {
     				printf("%s\n", reg_name(i, 4));
@@ -220,7 +218,6 @@ static uint32_t eval(int p, int q) {
     			n = cpu.eip;
     			return n;
     		}
-    		printf("bbb\n");
 		}
 		return n;
 	}
@@ -229,10 +226,8 @@ static uint32_t eval(int p, int q) {
 	}
 	else {
 		int op = dominant_operator(p, q);
-		//printf("%d, %s\n", op, tokens[op].str);
 		uint32_t val1 = eval(p, op - 1);
 		uint32_t val2 = eval(op + 1, q);
-		//printf("%u, %u\n", val1, val2);
 		switch (tokens[op].type) {
 		  case TK_PLUS: return val1 + val2;
 		  case TK_MINUS: return val1 - val2;
