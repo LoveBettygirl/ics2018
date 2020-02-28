@@ -114,7 +114,7 @@ static bool make_token(char *e) {
 }
 
 static int check_parentheses(int p, int q) {
-	assert(p < q);
+	assert(p <= q);
 	int estack[32] = {0};
 	int i, etop = -1;
 	int lastmatchlp = -1, lastmatchrp = -1;
