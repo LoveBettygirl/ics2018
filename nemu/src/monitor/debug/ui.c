@@ -233,7 +233,8 @@ static int cmd_p(char *args) {
 	bool success = false;
 	uint32_t result = expr(args, &success);
 	if (success) {
-		printf("result = %u\n", result);
+		printf("Decimal result = %u\n", result);
+		printf("Hexadecimal result = %x\n", result);
 	}
 	else {
 		printf("Illegal expression.\n");
