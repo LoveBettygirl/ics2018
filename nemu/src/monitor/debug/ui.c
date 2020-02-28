@@ -40,6 +40,7 @@ static int cmd_help(char *args);
 static int cmd_si(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
+static int cmd_p(char *args);
 
 static struct {
   char *name;
@@ -51,7 +52,8 @@ static struct {
   { "q", "Exit NEMU", cmd_q },
   { "si", "Step [N] instructions exactly, usage: si [N]", cmd_si },
   { "info", "Display informations about registers and watchpoints in the program being debugged, usage: info r / info w", cmd_info },
-  { "x", "Examine memory, usage: x [N] [EXPR]", cmd_x }
+  { "x", "Examine memory, usage: x [N] [EXPR]", cmd_x },
+  { "p", "Print value of expression, usage: p [EXPR]", cmd_p }
 
   /* TODO: Add more commands */
 
@@ -201,9 +203,14 @@ static int cmd_x(char *args) {
     char *temp2 = strtok(NULL, " ");
     uint32_t start_addr = 0;
     uint32_t mem_data = 0;
+    bool success = false;
     if (temp2 == NULL) {
       sscanf(arg, "%u", &n);
-      sscanf(temp1, "%x", &start_addr);
+      start_addr = expr(temp1, &success);
+      if (!success) {
+      	printf("Illegal expression.\n");
+      	return 0;
+      }
       uint32_t i, j;
       for (i = 0; i < n ; i++) {
       	printf("0x%x:    ", start_addr);
@@ -220,6 +227,19 @@ static int cmd_x(char *args) {
     }
   }
   return 0;
+}
+
+static int cmd_p(char *args) {
+	bool success = false;
+	uint32_t result = expr(args, &success);
+	if (success) {
+		printf("result = %u\n", result);
+		printf("Illegal expression.\n");
+	}
+	else {
+		printf("Illegal expression.\n");
+	}
+	return 0;
 }
 
 void ui_mainloop(int is_batch_mode) {
