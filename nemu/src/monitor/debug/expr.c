@@ -257,11 +257,11 @@ uint32_t expr(char *e, bool *success) {
   }
   uint32_t i;
   for (i = 0; i < nr_token; i++) {
-  	if (tokens[i].type == TK_MINUS && (i == 0 || is_op(tokens[i - 1].type))) {
+  	if (tokens[i].type == TK_MINUS && (i == 0 || (is_op(tokens[i - 1].type) && tokens[i - 1].type != TK_RPAREN))) {
   		tokens[i].type = TK_NEG;
   		continue;
   	}
-  	if (tokens[i].type == TK_TIMES && (i == 0 || is_op(tokens[i - 1].type))) {
+  	if (tokens[i].type == TK_TIMES && (i == 0 || (is_op(tokens[i - 1].type) && tokens[i - 1].type != TK_RPAREN))) {
   		tokens[i].type = TK_DEREF;
   		continue;
   	}
