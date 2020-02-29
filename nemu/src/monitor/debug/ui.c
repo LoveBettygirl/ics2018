@@ -41,6 +41,8 @@ static int cmd_si(char *args);
 static int cmd_info(char *args);
 static int cmd_x(char *args);
 static int cmd_p(char *args);
+static int cmd_w(char *args);
+static int cmd_d(char *args);
 
 static struct {
   char *name;
@@ -50,10 +52,12 @@ static struct {
   { "help", "Display informations about all supported commands", cmd_help },
   { "c", "Continue the execution of the program", cmd_c },
   { "q", "Exit NEMU", cmd_q },
-  { "si", "Step [N] instructions exactly, usage: si [N]", cmd_si },
+  { "si", "Step [N] instructions exactly (1 step if no args given), usage: si [N]", cmd_si },
   { "info", "Display informations about registers and watchpoints in the program being debugged, usage: info r / info w", cmd_info },
   { "x", "Examine memory, usage: x [N] [EXPR]", cmd_x },
-  { "p", "Print value of expression, usage: p [EXPR]", cmd_p }
+  { "p", "Print value of expression, usage: p [EXPR]", cmd_p },
+  { "w", "Set a watchpoint for an expression, usage: w [EXPR]", cmd_w },
+  { "d", "Delete watchpoint number [N] (delete all if no args given), usage: d [N]", cmd_d }
 
   /* TODO: Add more commands */
 
@@ -100,7 +104,7 @@ static int cmd_si(char *args) {
       cpu_exec(n); // Execute n times
     }
     else {
-      printf("Syntax error: Too much arguments\n");
+      printf("Syntax error: Too much arguments.\n");
     }
   }
   return 0;
@@ -181,7 +185,7 @@ static int cmd_info(char *args) {
     }
   }
   else if (strcmp(arg, "w") == 0) {
-    printf("To be implemented...\n");
+    print_wp();
   }
   else {
   	printf("Undefined info command: \"%s\"\n", arg);
@@ -223,7 +227,7 @@ static int cmd_x(char *args) {
       }
     }
     else {
-      printf("Syntax error: Too much arguments\n");
+      printf("Syntax error: Too much arguments.\n");
     }
   }
   return 0;
@@ -240,6 +244,44 @@ static int cmd_p(char *args) {
 		printf("Illegal expression.\n");
 	}
 	return 0;
+}
+
+static int cmd_w(char *args) {
+  bool success = false;
+  uint32_t result = expr(args, &success);
+  if (success) {
+    WP *wp = new_wp(args, result);
+    if (wp) {
+      printf("Watchpoint %d: %s\n\nValue = %u", wp->NO, args, result);
+    }
+  }
+  else {
+    printf("Illegal expression.\n");
+  }
+  return 0;
+}
+
+static int cmd_d(char *args) {
+  /* extract the first argument */
+  char *arg = strtok(NULL, " ");
+  int NO;
+
+  if (arg == NULL) {
+    /* no argument given */
+    init_wp_pool(); // Delete all watchpoints
+    printf("All watchpoints has been deleted.\n");
+  }
+  else {
+    char *temp = strtok(NULL, " ");
+    if (temp == NULL) {
+      sscanf(arg, "%d", &NO);
+      free_wp(NO); // Delete watchpoint number NO
+    }
+    else {
+      printf("Syntax error: Too much arguments.\n");
+    }
+  }
+  return 0;
 }
 
 void ui_mainloop(int is_batch_mode) {
