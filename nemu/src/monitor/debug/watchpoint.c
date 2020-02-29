@@ -77,10 +77,10 @@ void print_wp() {
 		printf("No watchpoints.\n");
 		return;
 	}
-	printf("%s%-20s%-20s\n", "Num", "What", "Value");
+	printf("%20s%-20s%-20s\n", "Num", "What", "Value");
 	WP *temp = head;
 	while (temp != NULL) {
-		printf("%d%-20s\t%-20u\n", temp->NO, temp->expr, temp->val);
+		printf("%20d%-20s\t%-20u\n", temp->NO, temp->expr, temp->val);
 		temp = temp->next;
 	}
 }
