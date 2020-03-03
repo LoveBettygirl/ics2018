@@ -86,7 +86,6 @@ void print_wp() {
 }
 
 WP* check_wp() {
-	assert(head != NULL);
 	WP *temp = head;
 	uint32_t val;
 	bool success = false;
