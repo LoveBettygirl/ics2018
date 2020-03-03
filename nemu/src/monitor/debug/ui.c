@@ -220,7 +220,7 @@ static int cmd_x(char *args) {
       	printf("0x%x:    ", start_addr);
       	for (j = 0; j < 4; j++) {
       		mem_data = vaddr_read(start_addr, 1);
-      		printf("%02x    ", mem_data);
+      		printf("0x%02x    ", mem_data);
       		start_addr++;
       	}
       	printf("\n");
