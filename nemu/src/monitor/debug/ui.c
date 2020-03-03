@@ -211,10 +211,10 @@ static int cmd_x(char *args) {
     if (temp2 == NULL) {
       sscanf(arg, "%u", &n);
       start_addr = expr(temp1, &success);
-      if (!success) {
+      /*if (!success) {
       	printf("Illegal expression.\n");
       	return 0;
-      }
+      }*/
       uint32_t i, j;
       for (i = 0; i < n ; i++) {
       	printf("0x%x:    ", start_addr);
