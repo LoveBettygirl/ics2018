@@ -207,11 +207,12 @@ static int cmd_x(char *args) {
     char *temp2 = strtok(NULL, " ");
     uint32_t start_addr = 0;
     uint32_t mem_data = 0;
-    bool success = false;
+    //bool success = false;
     if (temp2 == NULL) {
       sscanf(arg, "%u", &n);
-      start_addr = expr(temp1, &success);
-      /*if (!success) {
+      sscanf(temp1, "%x", &start_addr);
+      /*start_addr = expr(temp1, &success);
+      if (!success) {
       	printf("Illegal expression.\n");
       	return 0;
       }*/
