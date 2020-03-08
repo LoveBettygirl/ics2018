@@ -25,8 +25,8 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {"\\$[a-z]{2,3}", TK_REG},         // register
-  {"0x[0-9a-fA-F]+", TK_HEXINT},     // hexadecimal integer
+  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG},         // register
+  {"0x[1-9a-fA-F][0-9a-fA-F]*", TK_HEXINT},     // hexadecimal integer
   {"0|[1-9][0-9]*", TK_DECINT},      // decimal integer
   {"==", TK_EQ},                     // equal
   {"!=", TK_NEQ},                    // not equal
@@ -94,7 +94,8 @@ static bool make_token(char *e) {
          * of tokens, some extra actions should be performed.
          */
 
-        if (rules[i].token_type != TK_NOTYPE) {
+        if (rules[i].token_type != TK_NOTYPE) { // ignore spaces
+          assert(substr_len >= 0 && substr_len < 32);
           tokens[nr_token].type = rules[i].token_type;
           memset(tokens[nr_token].str, 0, sizeof(tokens[nr_token].str));
           strncpy(tokens[nr_token].str, substr_start, substr_len);
