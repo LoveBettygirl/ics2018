@@ -152,6 +152,7 @@ static bool is_op(int i) {
 }
 
 static int dominant_operator(int p, int q) {
+	assert(p < q);
 	int estack[32] = {0};
 	int i, etop = -1;
 	for (i = p; i <= q; i++) {
