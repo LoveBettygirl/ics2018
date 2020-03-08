@@ -137,7 +137,7 @@ static int check_parentheses(int p, int q) {
 		return -2; // bad expression, the leftmost '(' is not matched
 	}
 	if (lastmatchlp != p || lastmatchrp != q) {
-		if (tokens[p].type == TK_LPAREN && tokens[q].type == TK_LPAREN) {
+		if (tokens[p].type == TK_LPAREN && tokens[q].type == TK_RPAREN) {
 			return -3; // the leftmost '(' and the rightmost ')' are not matched
 		}
 		return -1; // the whole expression is not surrounded by a matched pair of parentheses
