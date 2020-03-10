@@ -169,15 +169,15 @@ static int priority(int token_type) {
 	}
 }
 
-static int judge_prior(int stack, int curr) {
-	if (priority(stack) == -1 || priority(curr) == -1)
+static int judge_prior(int sstack, int curr) {
+	if (priority(sstack) == -1 || priority(curr) == -1)
 		return 0;
-	if (priority(stack) > priority(curr))
+	if (priority(sstack) > priority(curr))
 		return 1;
-	else if (priority(stack) < priority(curr))
+	else if (priority(sstack) < priority(curr))
 		return -1;
 	else {
-		int pstack = priority(stack);
+		int pstack = priority(sstack);
 		if (pstack != 6)
 			return 1;
 		else
