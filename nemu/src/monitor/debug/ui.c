@@ -234,6 +234,10 @@ static int cmd_x(char *args) {
 }
 
 static int cmd_p(char *args) {
+  if (args == NULL) {
+    printf("Expression required.\n");
+    return 0;
+  }
 	bool success = false;
 	uint32_t result = expr(args, &success);
 	if (success) {
