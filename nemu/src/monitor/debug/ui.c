@@ -237,7 +237,7 @@ static int cmd_p(char *args) {
 	bool success = false;
 	uint32_t result = expr(args, &success);
 	if (success) {
-		printf("Decimal result = %u\n", result);
+		printf("Decimal result = %d\n", (int)result);
 		printf("Hexadecimal result = 0x%x\n", result);
 	}
 	else {

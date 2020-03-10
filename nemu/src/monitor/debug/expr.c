@@ -25,8 +25,8 @@ static struct rule {
    * Pay attention to the precedence level of different rules.
    */
 
-  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG},         // register
-  {"0x[1-9a-fA-F][0-9a-fA-F]*", TK_HEXINT},     // hexadecimal integer
+  {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG},         // register
+  {"0x(0|[1-9a-fA-F][0-9a-fA-F]*)", TK_HEXINT},     // hexadecimal integer
   {"0|[1-9][0-9]*", TK_DECINT},      // decimal integer
   {"==", TK_EQ},                     // equal
   {"!=", TK_NEQ},                    // not equal
@@ -118,7 +118,8 @@ static bool make_token(char *e) {
 
 static int check_parentheses(int p, int q) {
 	assert(p <= q);
-	int estack[32] = {0};
+	int estack[32];
+	memset(estack, -1, sizeof(estack));
 	int i, etop = -1;
 	int lastmatchlp = -1, lastmatchrp = -1;
 	for (i = p; i <= q; i++) {
@@ -153,7 +154,8 @@ static bool is_op(int i) {
 
 static int dominant_operator(int p, int q) {
 	assert(p < q);
-	int estack[32] = {0};
+	int estack[32];
+	memset(estack, -1, sizeof(estack));
 	int i, etop = -1;
 	for (i = p; i <= q; i++) {
 		if (!is_op(tokens[i].type)) continue;
@@ -191,20 +193,27 @@ static int dominant_operator(int p, int q) {
 			estack[++etop] = i;
 		}
 	}
+	if (etop < 0) {
+		return -1;
+	}
 	return estack[0];
 }
 
-static uint32_t eval(int p, int q) {
+static uint32_t eval(int p, int q, bool *success) {
 	if (p > q) {
+		*success = false;
 		return -1;
 	}
 	if (p == q) {
 		uint32_t n = -1;
+		*success = true;
 		if (tokens[p].type == TK_DECINT) {
 			sscanf(tokens[p].str, "%u", &n);
+			return n;
 		}
 		else if (tokens[p].type == TK_HEXINT) {
 			sscanf(tokens[p].str, "%x", &n);
+			return n;
 		}
 		else if (tokens[p].type == TK_REG) {
 			uint32_t i;
@@ -219,16 +228,48 @@ static uint32_t eval(int p, int q) {
     			n = cpu.eip;
     			return n;
     		}
+    		for (i = 0; i < 8; i++) {
+    			if (strcmp(reg_name(i, 2), str) == 0) {
+    				n = reg_w(i);
+    				return n;
+    			}
+    		}
+    		for (i = 0; i < 8; i++) {
+    			if (strcmp(reg_name(i, 1), str) == 0) {
+    				n = reg_b(i);
+    				return n;
+    			}
+    		}
 		}
+		*success = false;
 		return n;
 	}
 	else if (check_parentheses(p, q) == 1) {
-		return eval(p + 1, q - 1);
+		return eval(p + 1, q - 1, success);
 	}
 	else {
 		int op = dominant_operator(p, q);
-		uint32_t val1 = eval(p, op - 1);
-		uint32_t val2 = eval(op + 1, q);
+		if (op < 0) {
+			*success = false;
+			return -1;
+		}
+		uint32_t val = eval(op + 1, q, success);
+		if (*success == false) {
+			return -1;
+		}
+		switch (tokens[op].type) {
+		  case TK_NEG: return -val;
+		  case TK_DEREF: return vaddr_read(val, 4);
+		  case TK_LOGNOT: return !val;
+		}
+		uint32_t val1 = eval(p, op - 1, success);
+		if (*success == false) {
+			return -1;
+		}
+		uint32_t val2 = eval(op + 1, q, success);
+		if (*success == false) {
+			return -1;
+		}
 		switch (tokens[op].type) {
 		  case TK_PLUS: return val1 + val2;
 		  case TK_MINUS: return val1 - val2;
@@ -238,9 +279,6 @@ static uint32_t eval(int p, int q) {
 		  case TK_LOGOR: return val1 || val2;
 		  case TK_EQ: return val1 == val2;
 		  case TK_NEQ: return val1 != val2;
-		  case TK_NEG: return -val2;
-		  case TK_DEREF: return vaddr_read(val2, 4);
-		  case TK_LOGNOT: return !val2;
 		  default: assert(0);
 		}
 	}
@@ -269,5 +307,5 @@ uint32_t expr(char *e, bool *success) {
   	}
   }
   *success = true;
-  return eval(0, nr_token - 1);
+  return eval(0, nr_token - 1, success);
 }
