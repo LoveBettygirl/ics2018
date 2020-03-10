@@ -26,7 +26,7 @@ static struct rule {
    */
 
   {"\\$(eax|ecx|edx|ebx|esp|ebp|esi|edi|eip|ax|cx|dx|bx|sp|bp|si|di|al|cl|dl|bl|ah|ch|dh|bh)", TK_REG},         // register
-  {"0x(0|[1-9a-fA-F][0-9a-fA-F]*)", TK_HEXINT},     // hexadecimal integer
+  {"0x[0-9a-fA-F]+", TK_HEXINT},     // hexadecimal integer
   {"0|[1-9][0-9]*", TK_DECINT},      // decimal integer
   {"==", TK_EQ},                     // equal
   {"!=", TK_NEQ},                    // not equal
