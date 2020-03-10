@@ -305,6 +305,10 @@ uint32_t expr(char *e, bool *success) {
   }
 
   /* TODO: Insert codes to evaluate the expression. */
+  if (nr_token <= 0) {
+  	*success = false;
+  	return 0;
+  }
   if (check_parentheses(0, nr_token - 1) == -2) {
   	*success = false;
   	return 0;
