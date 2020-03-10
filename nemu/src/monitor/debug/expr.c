@@ -152,6 +152,39 @@ static bool is_op(int i) {
 	return false;
 }
 
+static int priority(int token_type) {
+	switch (token_type) {
+	  case TK_LOGOR: return 1;
+	  case TK_LOGAND: return 2;
+	  case TK_EQ:
+	  case TK_NEQ: return 3;
+	  case TK_PLUS:
+	  case TK_MINUS: return 4;
+	  case TK_TIMES:
+	  case TK_DIV: return 5;
+	  case TK_NEG:
+	  case TK_DEREF:
+	  case TK_LOGNOT: return 6;
+	  default: return -1;
+	}
+}
+
+static int judge_prior(int stack, int curr) {
+	if (priority(stack) == -1 || priority(curr) == -1)
+		return 0;
+	if (priority(stack) > priority(curr))
+		return 1;
+	else if (priority(stack) < priority(curr))
+		return -1;
+	else {
+		int pstack = priority(stack);
+		if (pstack != 6)
+			return 1;
+		else
+			return -1;
+	}
+}
+
 static int dominant_operator(int p, int q) {
 	assert(p < q);
 	int estack[32];
@@ -163,33 +196,14 @@ static int dominant_operator(int p, int q) {
 		else if (tokens[estack[etop]].type == TK_LPAREN) estack[++etop] = i;
 		else if (tokens[i].type == TK_LPAREN) estack[++etop] = i;
 		else if (tokens[i].type == TK_RPAREN) {
-			while (tokens[estack[etop]].type != TK_LPAREN) etop--;
-			etop--;
+			while (etop != -1 && tokens[estack[etop]].type != TK_LPAREN) etop--;
+			if (etop != -1 && tokens[estack[etop]].type == TK_LPAREN) etop--;
 		}
-		else if (tokens[i].type == TK_LOGOR) estack[etop] = i;
-		else if (tokens[i].type == TK_LOGAND) {
-			if (tokens[estack[etop]].type == TK_LOGOR) estack[++etop] = i;
-			else estack[etop] = i;
-		}
-		else if (tokens[i].type == TK_EQ || tokens[i].type == TK_NEQ) {
-			if (tokens[estack[etop]].type == TK_LOGAND || tokens[estack[etop]].type == TK_LOGOR)
-				estack[++etop] = i;
-			else estack[etop] = i;
-		}
-		else if (tokens[i].type == TK_PLUS || tokens[i].type == TK_MINUS) {
-			if (tokens[estack[etop]].type == TK_LOGAND || tokens[estack[etop]].type == TK_LOGOR
-				|| tokens[estack[etop]].type == TK_EQ || tokens[estack[etop]].type == TK_NEQ)
-				estack[++etop] = i;
-			else estack[etop] = i;
-		}
-		else if (tokens[i].type == TK_TIMES || tokens[i].type == TK_DIV) {
-			if (tokens[estack[etop]].type == TK_TIMES || tokens[estack[etop]].type == TK_DIV
-				|| tokens[estack[etop]].type == TK_LOGNOT || tokens[estack[etop]].type == TK_DEREF
-				|| tokens[estack[etop]].type == TK_NEG)
-				estack[etop] = i;
-			else estack[++etop] = i;
-		}
-		else if (tokens[i].type == TK_DEREF || tokens[i].type == TK_NEG || tokens[i].type == TK_LOGNOT) {
+		else if (judge_prior(tokens[estack[etop]].type, tokens[i].type) < 0)
+			estack[++etop] = i;
+		else if (judge_prior(tokens[estack[etop]].type, tokens[i].type) > 0) {
+			while (etop != -1 && judge_prior(tokens[estack[etop]].type, tokens[i].type) > 0) 
+				etop--;
 			estack[++etop] = i;
 		}
 	}
