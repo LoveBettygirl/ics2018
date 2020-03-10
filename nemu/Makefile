@@ -18,6 +18,10 @@ CFLAGS   += -O2 -MMD -Wall -Werror -ggdb $(INCLUDES)
 SRCS = $(shell find src/ -name "*.c")
 OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 
+# Line count
+LINES = $(shell find . -name "*[.h|.c]" | xargs cat | wc -l)
+LINESWB = $(shell find . -name "*[.h|.c]" | xargs cat | grep -v ^$$ | wc -l)
+
 # Compilation patterns
 $(OBJ_DIR)/%.o: src/%.c
 	@echo + CC $<
@@ -52,3 +56,7 @@ gdb: $(BINARY)
 
 clean: 
 	rm -rf $(BUILD_DIR)
+
+count:
+	@echo "Line count: $(LINES)"
+	@echo "Line count (without blank lines): $(LINESWB)"
