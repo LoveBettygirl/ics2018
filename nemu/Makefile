@@ -19,8 +19,8 @@ SRCS = $(shell find src/ -name "*.c")
 OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 
 # Line count
-LINES = $(shell find . -name "*[.h|.c]" | grep "^.*\.[hc]$$" | xargs cat | wc -l)
-LINESWB = $(shell find . -name "*[.h|.c]" | grep "^.*\.[hc]$$" | xargs cat | grep -v ^$$ | wc -l)
+LINES = $(shell find . -name *.[ch] | xargs cat | wc -l)
+LINESWB = $(shell find . -name *.[ch] | xargs cat | grep -v ^$$ | wc -l)
 
 # Compilation patterns
 $(OBJ_DIR)/%.o: src/%.c
