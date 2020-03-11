@@ -22,6 +22,8 @@ OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 CURRBRANCH = $(shell git branch | awk '/^\*/{print $$2}')
 LINES = $(shell find . -name *.[ch] | xargs cat | wc -l)
 LINESWB = $(shell find . -name *.[ch] | xargs cat | grep -v ^$$ | wc -l)
+LINES_ADD = $(shell expr $(LINES) - 3487)
+LINESWB_ADD = $(shell expr $(LINESWB) - 2817)
 
 # Compilation patterns
 $(OBJ_DIR)/%.o: src/%.c
@@ -60,5 +62,5 @@ clean:
 
 count:
 	@echo "On branch $(CURRBRANCH):"
-	@echo "Line count: $(LINES) lines in total"
-	@echo "Line count (without blank lines): $(LINESWB) lines in total"
+	@echo "Line count: $(LINES) lines in total, add $(LINES_ADD) lines into the frame code"
+	@echo "Line count (without blank lines): $(LINESWB) lines in total, add $(LINESWB_ADD) lines into the frame code"
