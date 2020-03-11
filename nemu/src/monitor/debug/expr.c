@@ -288,7 +288,14 @@ static uint32_t eval(int p, int q, bool *success) {
 		  case TK_PLUS: return val1 + val2;
 		  case TK_MINUS: return val1 - val2;
 		  case TK_TIMES: return val1 * val2;
-		  case TK_DIV: return val1 / val2;
+		  case TK_DIV: 
+		    if (val2 == 0) {
+		    	printf("Error: Divide by 0!\n");
+		    	*success = false;
+		    	return -1;
+		    }
+		    assert(val2 != 0);
+		    return val1 / val2;
 		  case TK_LOGAND: return val1 && val2;
 		  case TK_LOGOR: return val1 || val2;
 		  case TK_EQ: return val1 == val2;
