@@ -19,6 +19,7 @@ SRCS = $(shell find src/ -name "*.c")
 OBJS = $(SRCS:src/%.c=$(OBJ_DIR)/%.o)
 
 # Line count
+CURRBRANCH = $(shell git branch | awk '/^\*/{print $$2}')
 LINES = $(shell find . -name *.[ch] | xargs cat | wc -l)
 LINESWB = $(shell find . -name *.[ch] | xargs cat | grep -v ^$$ | wc -l)
 
@@ -58,5 +59,6 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 count:
-	@echo "Line count: $(LINES)"
-	@echo "Line count (without blank lines): $(LINESWB)"
+	@echo "On branch $(CURRBRANCH):"
+	@echo "Line count: $(LINES) lines in total"
+	@echo "Line count (without blank lines): $(LINESWB) lines in total"
