@@ -290,7 +290,7 @@ static uint32_t eval(int p, int q, bool *success) {
 		  case TK_TIMES: return val1 * val2;
 		  case TK_DIV: 
 		    if (val2 == 0) {
-		    	printf("Error: Divide by 0!\n");
+		    	printf("Error: Divide by 0 !\n");
 		    	*success = false;
 		    	return -1;
 		    }
