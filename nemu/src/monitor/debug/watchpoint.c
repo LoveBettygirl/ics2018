@@ -33,7 +33,7 @@ WP* new_wp(char *e, uint32_t val) {
 	head = temp;
 	strcpy(temp->expr, e);
 	temp->val = val;
-	temp->hit_count++;
+	temp->hit_count = 0;
 	temp->NO = using++;
 	return temp;
 }
