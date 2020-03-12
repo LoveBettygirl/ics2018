@@ -235,7 +235,7 @@ static int cmd_x(char *args) {
 
 static int cmd_p(char *args) {
   if (args == NULL) {
-    printf("Expression required.\n");
+    printf("Argument required (expression to compute).\n");
     return 0;
   }
 	bool success = false;
@@ -251,6 +251,10 @@ static int cmd_p(char *args) {
 }
 
 static int cmd_w(char *args) {
+  if (args == NULL) {
+    printf("Argument required (expression to compute).\n");
+    return 0;
+  }
   bool success = false;
   uint32_t result = expr(args, &success);
   if (success) {
