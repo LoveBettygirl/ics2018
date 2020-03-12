@@ -288,7 +288,7 @@ static int cmd_d(char *args) {
         printf("Watchpoint number %d is deleted successfully.\n", NO);
       }
       else {
-        printf("No watchpoint number %d\n.", NO);
+        printf("No watchpoint number %d.\n", NO);
       }
     }
     else {

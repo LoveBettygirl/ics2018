@@ -89,7 +89,7 @@ WP* check_wp() {
 	while (temp != NULL) {
 		val = expr(temp->expr, &success);
 		if (!success) {
-			printf("Evaluate failed in watchpoint number %d\n", temp->NO);
+			printf("Evaluate failed in watchpoint number %d.\n", temp->NO);
 			return NULL;
 		}
 		if (val != temp->val) {
