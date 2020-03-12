@@ -103,10 +103,10 @@ WP* check_wp() {
 		}
 		if (val != temp->val) {
 			printf("Watchpoint %d: %s\n\n", temp->NO, temp->expr);
-			printf("Hit count: %d\n", temp->hit_count);
 			printf("Old value = %u\n", temp->val);
 			printf("New value = %u\n", val);
-			printf("At address: 0x%x\n", cpu.eip);
+			printf("Hit count: %d\n", temp->hit_count);
+			printf("Hit at address: 0x%x\n", cpu.eip);
 			temp->val = val;
 			temp->hit_count++;
 			return temp;
