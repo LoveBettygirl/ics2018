@@ -32,12 +32,21 @@ WP* new_wp(char *e, uint32_t val) {
 	}
 	WP *temp = free_;
 	free_ = free_->next;
-	temp->next = head;
-	head = temp;
 	strcpy(temp->expr, e);
 	temp->val = val;
 	temp->hit_count = 0;
 	temp->NO = using++;
+	WP *temp2 = head;
+	temp->next = NULL;
+	if (temp2 == NULL) {
+		head = temp;
+	}
+	else {
+		while (temp2->next != NULL) {
+			temp2 = temp2->next;
+		}
+		temp2->next = temp;
+	}
 	return temp;
 }
 
