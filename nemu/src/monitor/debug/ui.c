@@ -273,13 +273,19 @@ static int cmd_d(char *args) {
   if (arg == NULL) {
     /* no argument given */
     init_wp_pool(); // Delete all watchpoints
-    printf("All watchpoints has been deleted.\n");
+    printf("All watchpoints have been deleted.\n");
   }
   else {
     char *temp = strtok(NULL, " ");
     if (temp == NULL) {
       sscanf(arg, "%d", &NO);
-      free_wp(NO); // Delete watchpoint number NO
+      // Delete watchpoint number NO
+      if (free_wp(NO)) {
+        printf("Watchpoint number %d is deleted successfully.\n", NO);
+      }
+      else {
+        printf("No watchpoint number %d\n.", NO);
+      }
     }
     else {
       printf("Syntax error: Too much arguments.\n");

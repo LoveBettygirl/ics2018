@@ -27,24 +27,20 @@ WP* new_wp(char *e, uint32_t val) {
 		printf("Error: No free watchpoints.\n");
 		return NULL;
 	}
-	if (!using) {
-		init_wp_pool();
-	}
 	WP *temp = free_;
 	free_ = free_->next;
 	temp->next = head;
 	head = temp;
 	strcpy(temp->expr, e);
 	temp->val = val;
-	using++;
+	temp->hit_count++;
+	temp->NO = using++;
 	return temp;
 }
 
-void free_wp(int NO) {
-	Assert(NO >= 0 && NO < NR_WP, "Illegal watchpoint number %d", NO);
+bool free_wp(int NO) {
 	if (head == NULL) {
-		printf("No watchpoint number %d\n", NO);
-		return;
+		return false;
 	}
 	WP *find = NULL;
 	if (head->NO == NO) {
@@ -63,13 +59,11 @@ void free_wp(int NO) {
 		}
 	}
 	if (find == NULL) {
-		printf("No watchpoint number %d\n", NO);
-		return;
+		return false;
 	}
 	find->next = free_;
 	free_ = find;
-	using--;
-	printf("Watchpoint number %d is deleted successfully.\n", NO);
+	return true;
 }
 
 void print_wp() {
@@ -77,10 +71,10 @@ void print_wp() {
 		printf("No watchpoints.\n");
 		return;
 	}
-	printf("%-5s%-20s%s\n", "Num", "What", "Value");
+	printf("%-5s%-20s%-10s%s\n", "Num", "What", "Value", "Hit count");
 	WP *temp = head;
 	while (temp != NULL) {
-		printf("%-5d%-20s%u\n", temp->NO, temp->expr, temp->val);
+		printf("%-5d%-20s%-10u%d\n", temp->NO, temp->expr, temp->val, temp->hit_count);
 		temp = temp->next;
 	}
 }
@@ -97,10 +91,12 @@ WP* check_wp() {
 		}
 		if (val != temp->val) {
 			printf("Watchpoint %d: %s\n\n", temp->NO, temp->expr);
+			printf("Hit count: %d\n", temp->hit_count);
 			printf("Old value = %u\n", temp->val);
 			printf("New value = %u\n", val);
 			printf("At address: 0x%x\n", cpu.eip);
 			temp->val = val;
+			temp->hit_count++;
 			return temp;
 		}
 		temp = temp->next;
