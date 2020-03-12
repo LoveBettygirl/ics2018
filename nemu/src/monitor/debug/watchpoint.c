@@ -36,8 +36,8 @@ WP* new_wp(char *e, uint32_t val) {
 	temp->val = val;
 	temp->hit_count = 0;
 	temp->NO = using++;
-	WP *temp2 = head;
 	temp->next = NULL;
+	WP *temp2 = head;
 	if (temp2 == NULL) {
 		head = temp;
 	}
