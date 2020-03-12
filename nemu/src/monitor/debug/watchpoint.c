@@ -7,7 +7,7 @@
 
 static WP wp_pool[NR_WP];
 static WP *head, *free_;
-static int using = 0;
+static int using = 1;
 
 void init_wp_pool() {
   int i;
