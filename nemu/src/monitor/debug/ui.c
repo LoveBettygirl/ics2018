@@ -260,7 +260,7 @@ static int cmd_w(char *args) {
   if (success) {
     WP *wp = new_wp(args, result);
     if (wp) {
-      printf("Watchpoint %d: %s\n\nValue = %u\n", wp->NO, args, result);
+      printf("Watchpoint %d: %s\n\nValue = %d\n", wp->NO, args, result);
     }
   }
   else {

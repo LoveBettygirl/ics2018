@@ -86,7 +86,7 @@ void print_wp() {
 	printf("%-5s%-20s%-10s%s\n", "Num", "What", "Value", "Hit count");
 	WP *temp = head;
 	while (temp != NULL) {
-		printf("%-5d%-20s%-10u%d\n", temp->NO, temp->expr, temp->val, temp->hit_count);
+		printf("%-5d%-20s%-10d%d\n", temp->NO, temp->expr, temp->val, temp->hit_count);
 		temp = temp->next;
 	}
 }
@@ -104,8 +104,8 @@ WP* check_wp() {
 		if (val != temp->val) {
 			temp->hit_count++;
 			printf("Watchpoint %d: %s\n\n", temp->NO, temp->expr);
-			printf("Old value = %u\n", temp->val);
-			printf("New value = %u\n", val);
+			printf("Old value = %d\n", temp->val);
+			printf("New value = %d\n", val);
 			printf("Hit count: %d\n", temp->hit_count);
 			printf("Hit at address: 0x%x\n", cpu.eip);
 			temp->val = val;
