@@ -175,6 +175,7 @@ make_DHelper(mov_I2r) {
 }
 
 /* used by unary operations */
+// Immediate data. The value of the operand is encoded in subsequent bytes of the instruction.
 make_DHelper(I) {
   decode_op_I(eip, id_dest, true);
 }
@@ -260,6 +261,8 @@ make_DHelper(a2O) {
   decode_op_O(eip, id_dest, false);
 }
 
+// The instruction contains a relative offset to be added to the 
+// instruction pointer register; e.g., JMP short, LOOP.
 make_DHelper(J) {
   decode_op_SI(eip, id_dest, false);
   // the target address can be computed in the decode stage
