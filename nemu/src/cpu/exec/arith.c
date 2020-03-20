@@ -9,16 +9,15 @@ make_EHelper(add) {
 make_EHelper(sub) {
   //TODO();
   rtl_sub(&t0, &id_dest->val, &id_src->val);
-  rtl_sltu(&t1, &id_dest->val, &id_src->val);
   operand_write(id_dest, &t0);
 
   rtl_update_ZFSF(&t0, id_dest->width);
 
+  rtl_sltu(&t1, &id_dest->val, &id_src->val);
   rtl_set_CF(&t1);
 
   rtl_xor(&t2, &id_dest->val, &id_src->val);
-  rtl_xor(&t3, &id_src->val, &t0);
-  rtl_not(&t3);
+  rtl_xor(&t3, &id_dest->val, &t0);
   rtl_and(&t0, &t2, &t3);
   rtl_msb(&t0, &t0, id_dest->width);
   rtl_set_OF(&t0);
