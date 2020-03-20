@@ -17,3 +17,4 @@ make_EHelper(ret);
 make_EHelper(sub);
 
 make_EHelper(xor);
+make_EHelper(and);
