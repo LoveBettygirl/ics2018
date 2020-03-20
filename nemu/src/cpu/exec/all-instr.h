@@ -14,6 +14,7 @@ make_EHelper(nop);
 
 make_EHelper(call);
 make_EHelper(ret);
+make_EHelper(jcc);
 
 make_EHelper(sub);
 make_EHelper(add);
