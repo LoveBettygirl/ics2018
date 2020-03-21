@@ -136,6 +136,29 @@ static int cmd_info(char *args) {
   		for (i = 0; i < 8 ; i++) {
   			printf("%s\t0x%x\t%hhd\n", reg_name(i, 1), reg_b(i), reg_b(i));
   		}
+      printf("eflags\t0x%x", cpu.eflags.val);
+      if(cpu.eflags.val == 0x00000002) {
+        printf("\n");
+      }
+      else {
+        printf("\t[ \n");
+        if(cpu.eflags.CF == 1) {
+          printf("CF ");
+        }
+        if(cpu.eflags.ZF == 1) {
+          printf("ZF ");
+        }
+        if(cpu.eflags.SF == 1) {
+          printf("SF ");
+        }
+        if(cpu.eflags.IF == 1) {
+          printf("IF ");
+        }
+        if(cpu.eflags.OF == 1) {
+          printf("OF ");
+        }
+        printf("]\n");
+      }
     }
     else {
     	uint32_t i;
@@ -177,6 +200,38 @@ static int cmd_info(char *args) {
     				break;
     			}
     		}
+        if (find) {
+          temp = strtok(NULL, " ");
+          continue;
+        }
+        if(strcmp("eflags", temp) == 0) {
+          printf("eflags\t0x%x", cpu.eflags.val);
+          if(cpu.eflags.val == 0x00000002) {
+            printf("\n");
+          }
+          else {
+            printf("\t[ \n");
+            if(cpu.eflags.CF == 1) {
+              printf("CF ");
+            }
+            if(cpu.eflags.ZF == 1) {
+              printf("ZF ");
+            }
+            if(cpu.eflags.SF == 1) {
+              printf("SF ");
+            }
+            if(cpu.eflags.IF == 1) {
+              printf("IF ");
+            }
+            if(cpu.eflags.OF == 1) {
+              printf("OF ");
+            }
+            printf("]\n");
+          }
+          find = 1;
+          temp = strtok(NULL, " ");
+          continue;
+        }
     		if (!find) {
     			printf("Invalid register `%s'\n", temp);
     		}
