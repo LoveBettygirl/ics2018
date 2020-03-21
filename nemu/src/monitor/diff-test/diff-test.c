@@ -150,7 +150,6 @@ void difftest_step(uint32_t eip) {
   // TODO: Check the registers state with QEMU.
   // Set `diff` as `true` if they are not the same.
   //TODO();
-  printf("diff test\n");
   int i, j = 0;
   for(i = 0; i < 8; i++) {
     if(reg_l(i) != r.array[j]) {
