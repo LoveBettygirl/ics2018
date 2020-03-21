@@ -33,6 +33,8 @@ make_EHelper(imul2);
 make_EHelper(idiv);
 make_EHelper(imul1);
 make_EHelper(div);
+make_EHelper(neg);
+make_EHelper(imul3);
 
 make_EHelper(xor);
 make_EHelper(and);
