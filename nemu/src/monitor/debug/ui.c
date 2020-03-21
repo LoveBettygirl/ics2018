@@ -141,7 +141,7 @@ static int cmd_info(char *args) {
         printf("\n");
       }
       else {
-        printf("\t[ \n");
+        printf("\t[ ");
         if(cpu.eflags.CF == 1) {
           printf("CF ");
         }
@@ -210,7 +210,7 @@ static int cmd_info(char *args) {
             printf("\n");
           }
           else {
-            printf("\t[ \n");
+            printf("\t[ ");
             if(cpu.eflags.CF == 1) {
               printf("CF ");
             }
