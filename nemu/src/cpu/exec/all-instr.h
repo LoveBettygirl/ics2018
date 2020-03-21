@@ -5,6 +5,7 @@ make_EHelper(push);
 make_EHelper(pop);
 make_EHelper(lea);
 make_EHelper(movzx);
+make_EHelper(cltd);
 
 make_EHelper(operand_size);
 
@@ -34,3 +35,4 @@ make_EHelper(or);
 make_EHelper(sar);
 make_EHelper(shl);
 make_EHelper(not);
+make_EHelper(shr);
