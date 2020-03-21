@@ -8,7 +8,7 @@ make_EHelper(add) {
   rtl_update_ZFSF(&t0, id_dest->width);
 
   rtl_sltu(&t1, &t0, &id_dest->val);
-  printf("%d\n", t1);
+  printf("%d %d %d\n", t1, t0, id_dest->val);
   rtl_set_CF(&t1);
 
   rtl_xor(&t2, &id_dest->val, &id_src->val);
