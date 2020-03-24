@@ -101,3 +101,19 @@ make_EHelper(not) {
 
   print_asm_template1(not);
 }
+
+make_EHelper(rol) {
+  rtl_mv(&t2, &id_src->val);
+  rtl_mv(&t0, &id_dest->val);
+  while(t2) {
+    rtl_msb(&t1, &t0, id_dest->width);
+    rtl_shli(&t0, &t0, 1);
+    rtl_or(&t0, &t0, &t1);
+    t2--;
+  }
+  operand_write(id_dest, &t0);
+
+  rtl_set_CF(&t1);
+
+  print_asm_template2(shl);
+}
