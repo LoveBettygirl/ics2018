@@ -1,6 +1,5 @@
 #include <am.h>
 #include <x86.h>
-#include <assert.h>
 
 #define RTC_PORT 0x48   // Note that this is not standard
 static unsigned long boot_time;
@@ -23,7 +22,6 @@ _Screen _screen = {
 extern void* memcpy(void *, const void *, int);
 
 void _draw_rect(const uint32_t *pixels, int x, int y, int w, int h) {
-  assert(x >= 0 && y >= 0);
   int width = x + w <= _screen.width ? w : _screen.width - x;
   int i, j;
   for (i = 0; i < _screen.height; i++) {
