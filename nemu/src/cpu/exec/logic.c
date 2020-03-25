@@ -115,5 +115,5 @@ make_EHelper(rol) {
 
   rtl_set_CF(&t1);
 
-  print_asm_template2(shl);
+  print_asm_template2(rol);
 }
