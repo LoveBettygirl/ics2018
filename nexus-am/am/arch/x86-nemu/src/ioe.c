@@ -32,8 +32,8 @@ void _draw_sync() {
 }
 
 int _read_key() {
-  if(inb(0x64) == 1) {
-  	return inl(0x60);
+  if(inb(0x64) == 1) { // 0x64: status port (uint32_t)
+  	return inl(0x60); // 0x60: data port (uint8_t)
   }
   return _KEY_NONE;
 }
