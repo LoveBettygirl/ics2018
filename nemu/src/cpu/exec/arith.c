@@ -103,13 +103,21 @@ make_EHelper(neg) {
   rtl_neq0(&t1, &id_dest->val);
   rtl_set_CF(&t1);
 
+  rtl_mv(&t2, &id_dest->val);
+
   switch(id_dest->width) {
-    case 1: rtl_eqi(&t2, &id_dest->val, 0x00000080); break;
-    case 2: rtl_eqi(&t2, &id_dest->val, 0x00008000); break;
-    case 4: rtl_eqi(&t2, &id_dest->val, 0x80000000); break;
+    case 1: 
+      rtl_andi(&t2, &t2, 0x000000ff);
+      rtl_eqi(&t3, &t2, 0x00000080);
+      break;
+    case 2: 
+      rtl_andi(&t2, &t2, 0x0000ffff);
+      rtl_eqi(&t3, &t2, 0x00008000);
+      break;
+    case 4: rtl_eqi(&t3, &id_dest->val, 0x80000000); break;
     default: assert(0);
   }
-  rtl_set_OF(&t2);
+  rtl_set_OF(&t3);
 
   print_asm_template1(neg);
 }
