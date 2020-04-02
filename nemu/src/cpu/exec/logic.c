@@ -105,11 +105,21 @@ make_EHelper(not) {
 make_EHelper(rol) {
   rtl_mv(&t2, &id_src->val);
   rtl_mv(&t0, &id_dest->val);
-  while(t2) {
+  if(t2 == 1) {
     rtl_msb(&t1, &t0, id_dest->width);
-    rtl_shli(&t0, &t0, 1);
+    rtl_shl(&t0, &t0, &t2);
     rtl_or(&t0, &t0, &t1);
-    t2--;
+    rtl_msb(&t3, &t0, id_dest->width);
+    rtl_xor(&t3, &t1, &t3);
+    rtl_set_OF(&t3);
+  }
+  else {
+    while(t2) {
+      rtl_msb(&t1, &t0, id_dest->width);
+      rtl_shli(&t0, &t0, 1);
+      rtl_or(&t0, &t0, &t1);
+      t2--;
+    }
   }
   operand_write(id_dest, &t0);
 
