@@ -105,7 +105,7 @@ make_EHelper(not) {
 make_EHelper(rol) {
   rtl_mv(&t2, &id_src->val);
   rtl_mv(&t0, &id_dest->val);
-  if(t2 == 1) {
+  /*if(t2 == 1) {
     rtl_msb(&t1, &t0, id_dest->width);
     rtl_shl(&t0, &t0, &t2);
     rtl_or(&t0, &t0, &t1);
@@ -120,6 +120,12 @@ make_EHelper(rol) {
       rtl_or(&t0, &t0, &t1);
       t2--;
     }
+  }*/
+  while(t2) {
+    rtl_msb(&t1, &t0, id_dest->width);
+    rtl_shli(&t0, &t0, 1);
+    rtl_or(&t0, &t0, &t1);
+    t2--;
   }
   operand_write(id_dest, &t0);
 
