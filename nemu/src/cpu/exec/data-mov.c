@@ -34,10 +34,18 @@ make_EHelper(popa) {
 
 make_EHelper(leave) {
   //TODO();
-  rtl_lr(&t0, R_EBP, 4);
-  rtl_sr(R_ESP, 4, &t0);
-  rtl_pop(&t1);
-  rtl_sr(R_EBP, 4, &t1);
+  if (decoding.is_operand_size_16) {
+    rtl_lr(&t0, R_BP, 2);
+    rtl_sr(R_SP, 2, &t0);
+    rtl_pop(&t1);
+    rtl_sr(R_BP, 2, &t1);
+  }
+  else {
+    rtl_lr(&t0, R_EBP, 4);
+    rtl_sr(R_ESP, 4, &t0);
+    rtl_pop(&t1);
+    rtl_sr(R_EBP, 4, &t1);
+  }
 
   print_asm("leave");
 }
