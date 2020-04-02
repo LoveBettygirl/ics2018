@@ -34,7 +34,7 @@ make_EHelper(popa) {
 
 make_EHelper(leave) {
   //TODO();
-  if (decoding.is_operand_size_16) {
+  /*if (decoding.is_operand_size_16) {
     rtl_lr(&t0, R_BP, 2);
     rtl_sr(R_SP, 2, &t0);
     rtl_pop(&t1);
@@ -45,7 +45,9 @@ make_EHelper(leave) {
     rtl_sr(R_ESP, 4, &t0);
     rtl_pop(&t1);
     rtl_sr(R_EBP, 4, &t1);
-  }
+  }*/
+  rtl_mv(&cpu.esp, &cpu.ebp);
+  rtl_pop(&cpu.ebp);
 
   print_asm("leave");
 }
