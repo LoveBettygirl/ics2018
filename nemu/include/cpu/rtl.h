@@ -8,7 +8,7 @@ extern const rtlreg_t tzero;
 
 /* RTL basic instructions */
 
-static inline void rtl_li(rtlreg_t* dest, uint32_t imm) {
+inline void rtl_li(rtlreg_t* dest, uint32_t imm) {
   *dest = imm;
 }
 
@@ -175,7 +175,7 @@ static inline void rtl_eqi(rtlreg_t* dest, const rtlreg_t* src1, int imm) {
   *dest = *src1 == imm ? 1 : 0;
 }
 
-inline void rtl_neq0(rtlreg_t* dest, const rtlreg_t* src1) {
+static inline void rtl_neq0(rtlreg_t* dest, const rtlreg_t* src1) {
   // dest <- (src1 != 0 ? 1 : 0)
   //TODO();
   *dest = *src1 != tzero ? 1 : 0;
