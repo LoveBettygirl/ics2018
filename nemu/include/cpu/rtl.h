@@ -75,11 +75,11 @@ static inline void rtl_lr_w(rtlreg_t* dest, int r) {
   *dest = reg_w(r);
 }
 
-static void rtl_lr_l(rtlreg_t* dest, int r) {
+static inline void rtl_lr_l(rtlreg_t* dest, int r) {
   *dest = reg_l(r);
 }
 
-static inline void rtl_sr_b(int r, const rtlreg_t* src1) {
+static void rtl_sr_b(int r, const rtlreg_t* src1) {
   reg_b(r) = *src1;
 }
 
