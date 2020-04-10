@@ -63,7 +63,7 @@ static inline void rtl_lm(rtlreg_t *dest, const rtlreg_t* addr, int len) {
   *dest = vaddr_read(*addr, len);
 }
 
-inline void rtl_sm(rtlreg_t* addr, int len, const rtlreg_t* src1) {
+static inline void rtl_sm(rtlreg_t* addr, int len, const rtlreg_t* src1) {
   vaddr_write(*addr, len, *src1);
 }
 
@@ -112,7 +112,7 @@ static inline void rtl_sr(int r, int width, const rtlreg_t* src1) {
 }
 
 #define make_rtl_setget_eflags(f) \
-  static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
+  inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
     cpu.eflags.f = *src; \
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
