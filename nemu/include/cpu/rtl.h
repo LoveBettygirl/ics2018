@@ -27,7 +27,7 @@ static inline void rtl_li(rtlreg_t* dest, uint32_t imm) {
   static inline void concat(rtl_, name) (rtlreg_t* dest, const rtlreg_t* src1, const rtlreg_t* src2) { \
     *dest = concat(c_, name) (*src1, *src2); \
   } \
-  inline void concat3(rtl_, name, i) (rtlreg_t* dest, const rtlreg_t* src1, int imm) { \
+  static inline void concat3(rtl_, name, i) (rtlreg_t* dest, const rtlreg_t* src1, int imm) { \
     *dest = concat(c_, name) (*src1, imm); \
   }
 
@@ -43,7 +43,7 @@ make_rtl_arith_logic(sar)
 make_rtl_arith_logic(slt)
 make_rtl_arith_logic(sltu)
 
-static inline void rtl_mul(rtlreg_t* dest_hi, rtlreg_t* dest_lo, const rtlreg_t* src1, const rtlreg_t* src2) {
+inline void rtl_mul(rtlreg_t* dest_hi, rtlreg_t* dest_lo, const rtlreg_t* src1, const rtlreg_t* src2) {
   asm volatile("mul %3" : "=d"(*dest_hi), "=a"(*dest_lo) : "a"(*src1), "r"(*src2));
 }
 
