@@ -163,13 +163,13 @@ static inline void rtl_pop(rtlreg_t* dest) {
   rtl_addi(&cpu.esp, &cpu.esp, 4);
 }
 
-inline void rtl_eq0(rtlreg_t* dest, const rtlreg_t* src1) {
+static inline void rtl_eq0(rtlreg_t* dest, const rtlreg_t* src1) {
   // dest <- (src1 == 0 ? 1 : 0)
   //TODO();
   *dest = *src1 == tzero ? 1 : 0;
 }
 
-static inline void rtl_eqi(rtlreg_t* dest, const rtlreg_t* src1, int imm) {
+inline void rtl_eqi(rtlreg_t* dest, const rtlreg_t* src1, int imm) {
   // dest <- (src1 == imm ? 1 : 0)
   //TODO();
   *dest = *src1 == imm ? 1 : 0;
