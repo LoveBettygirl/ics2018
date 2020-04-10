@@ -112,7 +112,7 @@ static inline void rtl_sr(int r, int width, const rtlreg_t* src1) {
 }
 
 #define make_rtl_setget_eflags(f) \
-  inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
+  static inline void concat(rtl_set_, f) (const rtlreg_t* src) { \
     cpu.eflags.f = *src; \
   } \
   static inline void concat(rtl_get_, f) (rtlreg_t* dest) { \
@@ -124,7 +124,7 @@ make_rtl_setget_eflags(OF)
 make_rtl_setget_eflags(ZF)
 make_rtl_setget_eflags(SF)
 
-static inline void rtl_mv(rtlreg_t* dest, const rtlreg_t *src1) {
+inline void rtl_mv(rtlreg_t* dest, const rtlreg_t *src1) {
   // dest <- src1
   //TODO();
   *dest = *src1;
