@@ -5,7 +5,7 @@ void diff_test_skip_nemu();
 
 make_EHelper(lidt) {
   //TODO();
-  cpu.idtr.limit = vaddr_read(id_dest->addr, 2);
+  rtl_lm((rtlreg_t*)&cpu.idtr.limit, &id_dest->addr, 2);
   if (decoding.is_operand_size_16) {
     rtl_addi(&t0, &id_dest->addr, 2);
     rtl_lm(&cpu.idtr.base, &t0, 3);
