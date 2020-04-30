@@ -7,7 +7,7 @@ static uintptr_t sys_none(_RegSet *r) {
 }
 
 static uintptr_t sys_exit(_RegSet *r) {
-  int ret = SYSCALL_ARG3(r);
+  int ret = SYSCALL_ARG4(r);
   _halt(ret);
   return ret;
 }
