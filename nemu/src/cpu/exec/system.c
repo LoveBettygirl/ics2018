@@ -6,8 +6,6 @@ void diff_test_skip_nemu();
 make_EHelper(lidt) {
   //TODO();
   cpu.idtr.limit = vaddr_read(id_dest->addr, 2);
-  printf("addr: 0x%x\n", id_dest->addr);
-  printf("val: 0x%x\n", id_dest->val);
   if (decoding.is_operand_size_16) {
     rtl_addi(&t0, &id_dest->addr, 2);
     rtl_lm(&cpu.idtr.base, &t0, 3);
