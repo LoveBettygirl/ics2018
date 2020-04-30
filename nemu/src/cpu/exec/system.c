@@ -5,13 +5,13 @@ void diff_test_skip_nemu();
 
 make_EHelper(lidt) {
   //TODO();
-  cpu.idtr.limit = vaddr_read(id_dest->val, 2);
+  cpu.idtr.limit = vaddr_read(id_dest->addr, 2);
   if (decoding.is_operand_size_16) {
-    rtl_addi(&t0, &id_dest->val, 2);
+    rtl_addi(&t0, &id_dest->addr, 2);
     rtl_lm(&cpu.idtr.base, &t0, 3);
   }
   else {
-    rtl_addi(&t0, &id_dest->val, 2);
+    rtl_addi(&t0, &id_dest->addr, 2);
     rtl_lm(&cpu.idtr.base, &t0, 4);
   }
 
