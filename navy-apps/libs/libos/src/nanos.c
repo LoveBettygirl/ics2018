@@ -30,10 +30,10 @@ int _write(int fd, void *buf, size_t count){
   _syscall_(SYS_write, fd, (uintptr_t)buf, count);
 }
 
-extern char end;
+extern char _end;
 
 void *_sbrk(intptr_t increment){
-  static char *addr = &end;
+  static char *addr = &_end;
   char *oldbrk = addr;
   char *newbrk = addr + increment;
   int ret = _syscall_(SYS_brk, (uintptr_t)newbrk, 0, 0);
