@@ -11,7 +11,7 @@ static uintptr_t sys_exit(int status) {
 }
 
 static uintptr_t sys_write(int fd, void *buf, size_t count) {
-	Log("");
+	Log("\n");
 	if (fd == 1 || fd == 2) {
 		size_t i;
 		for (i = 0; i < count; i++) {
