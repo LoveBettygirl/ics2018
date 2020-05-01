@@ -35,7 +35,7 @@ extern char _end;
 void *_sbrk(intptr_t increment){
   static char *addr = &_end;
   char temp[20]={0};
-  sprintf(temp, "%10p", &end);
+  sprintf(temp, "%10p\n", &_end);
   write(1, temp, 20);
   char *oldbrk = addr;
   char *newbrk = addr + increment;
