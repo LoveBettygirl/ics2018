@@ -33,9 +33,9 @@ int _write(int fd, void *buf, size_t count){
 extern char _end;
 
 void *_sbrk(intptr_t increment){
-  static char *addr = &_end;
-  char *oldbrk = addr;
-  char *newbrk = addr + increment;
+  static intptr_t addr = (intptr_t)&_end;
+  intptr_t oldbrk = addr;
+  intptr_t newbrk = addr + increment;
   int ret = _syscall_(SYS_brk, (uintptr_t)newbrk, 0, 0);
   if (ret == 0) {
     addr = newbrk;
