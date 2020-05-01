@@ -38,6 +38,7 @@ void *_sbrk(intptr_t increment){
   char *newbrk = addr + increment;
   int ret = _syscall_(SYS_brk, (uintptr_t)newbrk, 0, 0);
   if (ret == 0) {
+    write(1, "aaa\n", 4);
     addr = newbrk;
     return (void *)oldbrk;
   }
