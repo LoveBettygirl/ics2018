@@ -34,15 +34,10 @@ extern char _end;
 
 void *_sbrk(intptr_t increment){
   static char *addr = &_end;
-  char temp[20]={0};
-  sprintf(temp, "%10p\n", &_end);
-  write(1, temp, 20);
   char *oldbrk = addr;
   char *newbrk = addr + increment;
   int ret = _syscall_(SYS_brk, (uintptr_t)newbrk, 0, 0);
-  //write(1, "aaa\n", 4);
   if (ret == 0) {
-    write(1, "aaa\n", 4);
     addr = newbrk;
     return (void *)oldbrk;
   }
