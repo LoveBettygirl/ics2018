@@ -30,8 +30,16 @@ int _write(int fd, void *buf, size_t count){
   _syscall_(SYS_write, fd, (uintptr_t)buf, count);
 }
 
+extern char end;
+
 void *_sbrk(intptr_t increment){
-  return (void *)-1;
+  static char *addr = &end;
+  char *oldbrk = addr;
+  char *newbrk = addr + increment;
+  int ret = _syscall_(SYS_brk, (uintptr_t)newbrk, 0, 0);
+  if (ret == 0)
+    addr = newbrk;
+  return (void *)oldbrk;
 }
 
 int _read(int fd, void *buf, size_t count) {
