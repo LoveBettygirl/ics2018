@@ -37,9 +37,11 @@ void *_sbrk(intptr_t increment){
   char *oldbrk = addr;
   char *newbrk = addr + increment;
   int ret = _syscall_(SYS_brk, (uintptr_t)newbrk, 0, 0);
-  if (ret == 0)
+  if (ret == 0) {
     addr = newbrk;
-  return (void *)oldbrk;
+    return (void *)oldbrk;
+  }
+  return (void *)-1;
 }
 
 int _read(int fd, void *buf, size_t count) {
