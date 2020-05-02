@@ -39,6 +39,6 @@ void init_device() {
   // described in the Navy-apps convention
   int fd = fs_open("/proc/dispinfo", 0, 0);
   fs_read(fd, dispinfo, fs_filesz(fd));
-  printk("%s\n", dispinfo);
+  Log("%s\n", dispinfo);
   fs_close(fd);
 }
