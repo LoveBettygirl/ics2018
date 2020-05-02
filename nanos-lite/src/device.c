@@ -22,24 +22,21 @@ void fb_write(const void *buf, off_t offset, size_t len) {
   off_t x = offset / sizeof(uint32_t) % _screen.width;
   off_t y = offset / sizeof(uint32_t) / _screen.width;
   off_t w = len / sizeof(uint32_t);
-  /*if (w >= _screen.width - x) {
-  	_draw_rect(buf, x, y, _screen.width - 1 - x, 0);
-  	off_t temp;
-  	int i;
-  	uint32_t *buf1 = (uint32_t*)buf + (_screen.width - 1 - x);
-  	temp = w = w - (_screen.width - 1 - x);
-  	for (i = 1; i <= temp / (_screen.width - 1); i++) {
-  	  _draw_rect(buf1, 0, y + i, _screen.width - 1, 0);
-  	  w -= (_screen.width - 1);
-  	  buf1 += (_screen.width - 1);
+  if (x + w >= _screen.width) {
+  	_draw_rect(buf, x, y, _screen.width - x, 1);
+  	w -= (_screen.width - x);
+  	uint32_t *buf1 = (uint32_t*)buf + (_screen.width - x);
+  	if (w / _screen.width > 0) {
+  	  _draw_rect(buf1, 0, y + 1, _screen.width, w / _screen.width);
+  	  buf1 += (w - w % _screen.width);
+  	  w %= _screen.width;
+  	  y += (w / _screen.width);
   	}
-  	if (w != 0)
-  	  _draw_rect(buf1, 0, y + i, w, 0);
+  	_draw_rect(buf1, 0, y + 1, w, 1);
   }
   else {
-	_draw_rect(buf, x, y, w, 0);
-  }*/
-  _draw_rect(buf, x, y, w, 1);
+	_draw_rect(buf, x, y, w, 1);
+  }
 }
 
 void init_device() {
