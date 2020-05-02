@@ -38,7 +38,7 @@ void init_device() {
   // TODO: print the string to array `dispinfo` with the format
   // described in the Navy-apps convention
   int fd = fs_open("/proc/dispinfo", 0, 0);
-  char temp[fs_filesz(fd)];
+  char temp[130];
   fs_read(fd, temp, fs_filesz(fd));
   Log("%s", temp);
   fs_close(fd);
