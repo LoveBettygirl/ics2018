@@ -47,6 +47,7 @@ int fs_open(const char *pathname, int flags, int mode) {
 ssize_t fs_read(int fd, void *buf, size_t len) {
   assert(fd > 2);
   int filesz = fs_filesz(fd);
+  Log("");
   int ret = file_table[fd].open_offset + len >= filesz? 
     (filesz - 1 - file_table[fd].open_offset): len;
   ramdisk_read(buf, file_table[fd].open_offset, ret);
