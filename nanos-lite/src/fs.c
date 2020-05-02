@@ -47,9 +47,12 @@ int fs_open(const char *pathname, int flags, int mode) {
 ssize_t fs_read(int fd, void *buf, size_t len) {
   assert(fd > 2);
   int filesz = fs_filesz(fd);
+  off_t addr = file_table[fd].disk_offset + file_table[fd].open_offset;
+  if (addr < file_table[fd].disk_offset || addr >= file_table[fd].disk_offset + filesz)
+    return -1;
   int ret = file_table[fd].open_offset + len >= filesz? 
     (filesz - 1 - file_table[fd].open_offset): len;
-  ramdisk_read(buf, file_table[fd].disk_offset + file_table[fd].open_offset, ret);
+  ramdisk_read(buf, addr, ret);
   file_table[fd].open_offset += ret;
   return ret;
 }
@@ -64,9 +67,12 @@ ssize_t fs_write(int fd, const void *buf, size_t len) {
   }
   assert(fd != 0);
   int filesz = fs_filesz(fd);
+  off_t addr = file_table[fd].disk_offset + file_table[fd].open_offset;
+  if (addr < file_table[fd].disk_offset || addr >= file_table[fd].disk_offset + filesz)
+    return -1;
   int ret = file_table[fd].open_offset + len >= filesz? 
     (filesz - 1 - file_table[fd].open_offset): len;
-  ramdisk_write(buf, file_table[fd].disk_offset + file_table[fd].open_offset, ret);
+  ramdisk_write(buf, addr, ret);
   file_table[fd].open_offset += ret;
   return ret;
 }
@@ -79,7 +85,6 @@ off_t fs_lseek(int fd, off_t offset, int whence) {
     case SEEK_END: start = fs_filesz(fd); break;
     default: assert(0);
   }
-  //assert(start + offset >= 0 && start + offset <= fs_filesz(fd));
   file_table[fd].open_offset = start + offset;
   return start + offset;
 }
