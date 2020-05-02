@@ -13,6 +13,7 @@ size_t events_read(void *buf, size_t len) {
 }
 
 static char dispinfo[128] __attribute__((used));
+
 extern _Screen _screen;
 extern void _draw_rect(const uint32_t *pixels, int x, int y, int w, int h);
 extern int fs_open(const char *pathname, int flags, int mode);
@@ -39,5 +40,6 @@ void init_device() {
   // described in the Navy-apps convention
   int fd = fs_open("/proc/dispinfo", 0, 0);
   fs_read(fd, dispinfo, fs_filesz(fd));
+  Log("%s", dispinfo);
   fs_close(fd);
 }
