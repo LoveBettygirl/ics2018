@@ -19,7 +19,7 @@ size_t events_read(void *buf, size_t len) {
     return snprintf((char*)buf, len, "%s %s\n", down ? "kd" : "ku", keyname[key]) - 1;
   }
   else {
-  	return snprintf((char*)buf, len, "t %lu\n", _uptime()) - 1;
+  	return snprintf((char*)buf, len, "t %d\n", _uptime()) - 1;
   }
 }
 
