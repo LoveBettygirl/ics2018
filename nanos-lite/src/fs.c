@@ -78,6 +78,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len) {
 }
 
 off_t fs_lseek(int fd, off_t offset, int whence) {
+  assert(fd > 2);
   off_t start = 0;
   switch (whence) {
     case SEEK_SET: start = 0; break;
