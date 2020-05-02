@@ -22,8 +22,11 @@ static Finfo file_table[] __attribute__((used)) = {
 
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
 
+extern uint32_t* const fb;
+
 void init_fs() {
   // TODO: initialize the size of /dev/fb
+  file_table[FD_FB].size = (off_t)fb;
 }
 
 extern void ramdisk_write(const void *buf, off_t offset, size_t len);
@@ -40,7 +43,7 @@ int fs_open(const char *pathname, int flags, int mode) {
       return i;
     }
   }
-  assert(0);
+  panic("The file %s not found", pathname);
   return -1;
 }
 
