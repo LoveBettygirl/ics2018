@@ -22,14 +22,14 @@ void fb_write(const void *buf, off_t offset, size_t len) {
   off_t x = offset / sizeof(uint32_t) % _screen.width;
   off_t y = offset / sizeof(uint32_t) / _screen.width;
   off_t w = len / sizeof(uint32_t);
-  if (w > _screen.width - x){
-  	_draw_rect(buf, x, y, _screen.width - x, 0);
+  if (w >= _screen.width - x){
+  	_draw_rect(buf, x, y, _screen.width - 1 - x, 0);
   	off_t temp;
   	int i;
-  	temp = w = w - (_screen.width - x);
-  	for (i = 1; i <= temp / _screen.width; i++) {
-  	  _draw_rect(buf, 0, y + i, _screen.width, 0);
-  	  w -= _screen.width;
+  	temp = w = w - (_screen.width - 1 - x);
+  	for (i = 1; i <= temp / (_screen.width - 1); i++) {
+  	  _draw_rect(buf, 0, y + i, _screen.width - 1, 0);
+  	  w -= (_screen.width - 1);
   	}
   	if (w != 0)
   	  _draw_rect(buf, 0, y + i, w, 0);
