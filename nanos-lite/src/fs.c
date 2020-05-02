@@ -22,8 +22,6 @@ static Finfo file_table[] __attribute__((used)) = {
 
 #define NR_FILES (sizeof(file_table) / sizeof(file_table[0]))
 
-extern _Screen _screen;
-
 void init_fs() {
   // TODO: initialize the size of /dev/fb
   file_table[FD_FB].size = (off_t)(_screen.width * _screen.height * sizeof(uint32_t));
