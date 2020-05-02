@@ -22,7 +22,7 @@ void fb_write(const void *buf, off_t offset, size_t len) {
   off_t x = offset / sizeof(uint32_t) % _screen.width;
   off_t y = offset / sizeof(uint32_t) / _screen.width;
   off_t w = len / sizeof(uint32_t);
-  if (w >= _screen.width - x) {
+  /*if (w >= _screen.width - x) {
   	_draw_rect(buf, x, y, _screen.width - 1 - x, 0);
   	off_t temp;
   	int i;
@@ -38,7 +38,8 @@ void fb_write(const void *buf, off_t offset, size_t len) {
   }
   else {
 	_draw_rect(buf, x, y, w, 0);
-  }
+  }*/
+  _draw_rect(buf, x, y, w, 0);
 }
 
 void init_device() {
