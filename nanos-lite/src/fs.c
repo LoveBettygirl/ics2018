@@ -36,7 +36,7 @@ size_t fs_filesz(int fd) {
 int fs_open(const char *pathname, int flags, int mode) {
   for (int i = 3; i < NR_FILES; i++) {
     if (strcmp(pathname, file_table[i].name) == 0) {
-      file_table[i].open_offset = file_table[i].disk_offset;
+      file_table[i].open_offset = 0;
       return i;
     }
   }
@@ -46,8 +46,9 @@ int fs_open(const char *pathname, int flags, int mode) {
 
 ssize_t fs_read(int fd, void *buf, size_t len) {
   assert(fd > 2);
-  int ret = file_table[fd].open_offset + len >= file_table[fd].disk_offset + fs_filesz(fd)? 
-    (file_table[fd].disk_offset + fs_filesz(fd) - 1 - file_table[fd].open_offset): len;
+  int filesz = fs_filesz(fd);
+  int ret = file_table[fd].open_offset + len >= filesz? 
+    (filesz - 1 - file_table[fd].open_offset): len;
   ramdisk_read(buf, file_table[fd].open_offset, ret);
   file_table[fd].open_offset += ret;
   return ret;
@@ -62,19 +63,25 @@ ssize_t fs_write(int fd, const void *buf, size_t len) {
     return i;
   }
   assert(fd != 0);
-  int ret = file_table[fd].open_offset + len >= file_table[fd].disk_offset + fs_filesz(fd)? 
-    (file_table[fd].disk_offset + fs_filesz(fd) - 1 - file_table[fd].open_offset): len;
+  int filesz = fs_filesz(fd);
+  int ret = file_table[fd].open_offset + len >= filesz? 
+    (filesz - 1 - file_table[fd].open_offset): len;
   ramdisk_write(buf, file_table[fd].open_offset, ret);
   file_table[fd].open_offset += ret;
   return ret;
 }
 
 off_t fs_lseek(int fd, off_t offset, int whence) {
-  Log("fs_lseek()");
-  assert(whence >= file_table[fd].disk_offset && whence + offset < file_table[fd].disk_offset + fs_filesz(fd));
-  //int ret = whence + offset >= fs_filesz(fd)? file_table[fd].disk_offset + fs_filesz(fd) - 1: whence + offset;
-  file_table[fd].open_offset = whence + offset;
-  return whence + offset;
+  off_t start = 0;
+  switch (whence) {
+    case SEEK_SET: start = 0; break;
+    case SEEK_CUR: start = file_table[fd].open_offset; break;
+    case SEEK_END: start = fs_filesz(fd); break;
+    default: assert(0);
+  }
+  //assert(start + offset >= 0 && start + offset <= fs_filesz(fd));
+  file_table[fd].open_offset = start + offset;
+  return start + offset;
 }
 
 int fs_close(int fd) {
