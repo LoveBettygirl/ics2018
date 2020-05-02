@@ -40,6 +40,7 @@ void init_device() {
   int fd = fs_open("/proc/dispinfo", 0, 0);
   char temp[130];
   fs_read(fd, temp, fs_filesz(fd));
+  temp[fs_filesz(fd)]='\0';
   Log("%s", temp);
   fs_close(fd);
 }
