@@ -31,6 +31,8 @@ void init_fs() {
 
 extern void ramdisk_write(const void *buf, off_t offset, size_t len);
 extern void ramdisk_read(void *buf, off_t offset, size_t len);
+extern void dispinfo_read(void *buf, off_t offset, size_t len);
+extern void fb_write(const void *buf, off_t offset, size_t len);
 
 size_t fs_filesz(int fd) {
   return file_table[fd].size;
@@ -55,7 +57,12 @@ ssize_t fs_read(int fd, void *buf, size_t len) {
     return -1;
   int ret = file_table[fd].open_offset + len >= filesz? 
     (filesz - 1 - file_table[fd].open_offset): len;
-  ramdisk_read(buf, addr, ret);
+  if (fd == FD_DISPINFO) {
+    dispinfo_read(buf, addr, ret);
+  }
+  else {
+    ramdisk_read(buf, addr, ret);
+  }
   file_table[fd].open_offset += ret;
   return ret;
 }
@@ -75,7 +82,12 @@ ssize_t fs_write(int fd, const void *buf, size_t len) {
     return -1;
   int ret = file_table[fd].open_offset + len >= filesz? 
     (filesz - 1 - file_table[fd].open_offset): len;
-  ramdisk_write(buf, addr, ret);
+  if (fd == FD_FB) {
+    fb_write(buf, addr, ret);
+  }
+  else {
+    ramdisk_write(buf, addr, ret);
+  }
   file_table[fd].open_offset += ret;
   return ret;
 }
