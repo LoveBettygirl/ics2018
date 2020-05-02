@@ -12,6 +12,7 @@ extern size_t fs_filesz(int fd);
 uintptr_t loader(_Protect *as, const char *filename) {
   //TODO();
   //ramdisk_read((void*)DEFAULT_ENTRY, 0, get_ramdisk_size());
+  Log("The image is %s", filename);
   int fd = fs_open(filename, 0, 0);
   fs_read(fd, (void*)DEFAULT_ENTRY, fs_filesz(fd));
   fs_close(fd);
