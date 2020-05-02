@@ -31,6 +31,7 @@ extern void ramdisk_write(const void *buf, off_t offset, size_t len);
 extern void ramdisk_read(void *buf, off_t offset, size_t len);
 extern void dispinfo_read(void *buf, off_t offset, size_t len);
 extern void fb_write(const void *buf, off_t offset, size_t len);
+extern size_t events_read(void *buf, size_t len);
 
 size_t fs_filesz(int fd) {
   return file_table[fd].size;
@@ -49,6 +50,9 @@ int fs_open(const char *pathname, int flags, int mode) {
 
 ssize_t fs_read(int fd, void *buf, size_t len) {
   assert(fd > 2);
+  if (fd == FD_EVENTS) {
+    return events_read(buf, len);
+  }
   int filesz = fs_filesz(fd);
   off_t addr = file_table[fd].disk_offset + file_table[fd].open_offset;
   if (addr < file_table[fd].disk_offset || addr >= file_table[fd].disk_offset + filesz)
