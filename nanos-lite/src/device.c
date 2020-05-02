@@ -39,7 +39,7 @@ void fb_write(const void *buf, off_t offset, size_t len) {
   else {
 	_draw_rect(buf, x, y, w, 0);
   }*/
-  _draw_rect(buf, x, y, w, 0);
+  _draw_rect(buf, x, y, w, 1);
 }
 
 void init_device() {
