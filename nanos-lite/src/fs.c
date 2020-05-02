@@ -83,8 +83,9 @@ off_t fs_lseek(int fd, off_t offset, int whence) {
     case SEEK_SET: start = 0; break;
     case SEEK_CUR: start = file_table[fd].open_offset; break;
     case SEEK_END: start = fs_filesz(fd); break;
-    default: assert(0);
+    default: return -1;
   }
+  if (start + offset < 0 || start + offset >= fs_filesz(fd)) return -1;
   file_table[fd].open_offset = start + offset;
   return start + offset;
 }
