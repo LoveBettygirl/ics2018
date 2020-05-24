@@ -7,7 +7,7 @@ static uintptr_t sys_none() {
 
 static uintptr_t sys_exit(int status) {
 	_halt(status);
-	return status;
+	return status; // Should not reach here
 }
 
 extern int fs_open(const char *pathname, int flags, int mode);

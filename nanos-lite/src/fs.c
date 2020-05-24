@@ -34,6 +34,7 @@ extern void fb_write(const void *buf, off_t offset, size_t len);
 extern size_t events_read(void *buf, size_t len);
 
 size_t fs_filesz(int fd) {
+  assert(fd > 2 && fd < NR_FILES);
   return file_table[fd].size;
 }
 
@@ -49,16 +50,16 @@ int fs_open(const char *pathname, int flags, int mode) {
 }
 
 ssize_t fs_read(int fd, void *buf, size_t len) {
-  assert(fd > 2);
+  assert(fd > 2 && fd < NR_FILES);
   if (fd == FD_EVENTS) {
     return events_read(buf, len);
   }
   int filesz = fs_filesz(fd);
   off_t addr = file_table[fd].disk_offset + file_table[fd].open_offset;
-  if (addr < file_table[fd].disk_offset || addr >= file_table[fd].disk_offset + filesz)
+  if (addr < file_table[fd].disk_offset || addr > file_table[fd].disk_offset + filesz)
     return -1;
-  int ret = file_table[fd].open_offset + len >= filesz? 
-    (filesz - 1 - file_table[fd].open_offset): len;
+  int ret = file_table[fd].open_offset + len > filesz? 
+    (filesz - file_table[fd].open_offset): len;
   if (fd == FD_DISPINFO) {
     dispinfo_read(buf, addr, ret);
   }
@@ -77,13 +78,13 @@ ssize_t fs_write(int fd, const void *buf, size_t len) {
     }
     return i;
   }
-  assert(fd != 0);
+  assert(fd > 2 && fd < NR_FILES);
   int filesz = fs_filesz(fd);
   off_t addr = file_table[fd].disk_offset + file_table[fd].open_offset;
-  if (addr < file_table[fd].disk_offset || addr >= file_table[fd].disk_offset + filesz)
+  if (addr < file_table[fd].disk_offset || addr > file_table[fd].disk_offset + filesz)
     return -1;
-  int ret = file_table[fd].open_offset + len >= filesz? 
-    (filesz - 1 - file_table[fd].open_offset): len;
+  int ret = file_table[fd].open_offset + len > filesz? 
+    (filesz - file_table[fd].open_offset): len;
   if (fd == FD_FB) {
     fb_write(buf, addr, ret);
   }
@@ -95,7 +96,7 @@ ssize_t fs_write(int fd, const void *buf, size_t len) {
 }
 
 off_t fs_lseek(int fd, off_t offset, int whence) {
-  assert(fd > 2);
+  assert(fd > 2 && fd < NR_FILES);
   off_t start = 0;
   switch (whence) {
     case SEEK_SET: start = 0; break;
@@ -109,5 +110,6 @@ off_t fs_lseek(int fd, off_t offset, int whence) {
 }
 
 int fs_close(int fd) {
+  assert(fd > 2 && fd < NR_FILES);
   return 0;
 }
