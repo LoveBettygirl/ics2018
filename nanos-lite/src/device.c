@@ -16,11 +16,12 @@ size_t events_read(void *buf, size_t len) {
     down = true;
   }
   if (key != _KEY_NONE) {
-    return snprintf((char*)buf, len, "%s %s\n", down ? "kd" : "ku", keyname[key]) - 1;
+    snprintf((char*)buf, len + 1, "%s %s\n", down ? "kd" : "ku", keyname[key]);
   }
   else {
-  	return snprintf((char*)buf, len, "t %d\n", _uptime()) - 1;
+  	snprintf((char*)buf, len + 1, "t %d\n", _uptime());
   }
+  return strlen(buf);
 }
 
 static char dispinfo[128] __attribute__((used));
