@@ -66,9 +66,9 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
     int low_len = 0x1000 - (addr & 0xfff);
     vaddr_t high_vaddr = addr + low_len;
     paddr_t low_paddr = page_translate(addr, false);
-    paddr_t high_paddr = page_translate(high_vaddr, false);
     uint32_t data = 0;
     data = paddr_read(low_paddr, low_len);
+    paddr_t high_paddr = page_translate(high_vaddr, false);
     data = (paddr_read(high_paddr, len - low_len) << low_len) | data;
     return data;
   }
@@ -85,8 +85,8 @@ void vaddr_write(vaddr_t addr, int len, uint32_t data) {
     int high_len = len - low_len;
     vaddr_t high_vaddr = addr + low_len;
     paddr_t low_paddr = page_translate(addr, true);
-    paddr_t high_paddr = page_translate(high_vaddr, true);
     paddr_write(low_paddr, low_len, (data << high_len) >> high_len);
+    paddr_t high_paddr = page_translate(high_vaddr, true);
     paddr_write(high_paddr, high_len, data >> low_len);
   }
   else {
