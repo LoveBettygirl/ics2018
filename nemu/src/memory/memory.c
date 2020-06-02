@@ -38,15 +38,15 @@ bool data_cross_page(vaddr_t addr, int len) {
 
 paddr_t page_translate(vaddr_t addr, bool is_write) {
   if (cpu.cr0.paging) {
-    paddr_t pdbase = (cpu.cr3.val & 0xfffff000) | (((addr >> 22) & 0x3ff) << 2);
+    paddr_t pdbase = (cpu.cr3.page_directory_base << 12) | (((addr >> 22) & 0x3ff) << 2);
     PDE pde;
     pde.val = paddr_read(pdbase, sizeof(PDE));
     assert(pde.present);
-    paddr_t ptbase = (pde.val & 0xfffff000) | (((addr >> 12) & 0x3ff) << 2);
+    paddr_t ptbase = (pde.page_frame << 12) | (((addr >> 12) & 0x3ff) << 2);
     PTE pte;
     pte.val = paddr_read(ptbase, sizeof(PTE));
     assert(pte.present);
-    paddr_t paddr = (pte.val & 0xfffff000) | (addr & 0xfff);
+    paddr_t paddr = (pte.page_frame << 12) | (addr & 0xfff);
     pde.accessed = 1;
     paddr_write(pdbase, sizeof(PDE), pde.val);
     pte.accessed = 1;
