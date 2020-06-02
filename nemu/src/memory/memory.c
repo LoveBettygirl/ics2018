@@ -37,12 +37,13 @@ bool data_cross_page(vaddr_t addr, int len) {
 }
 
 paddr_t page_translate(vaddr_t addr, bool is_write) {
+  printf("%d\n", cpu.cr0.paging);
   if (cpu.cr0.paging) {
-    paddr_t pdbase = (cpu.cr3.page_directory_base << 12) | (((addr >> 22) & 0x3ff) * sizeof(PDE));
+    paddr_t pdbase = (cpu.cr3.page_directory_base << 12) | (((addr >> 22) & 0x3ff) << 2);
     PDE pde;
     pde.val = paddr_read(pdbase, sizeof(PDE));
     assert(pde.present);
-    paddr_t ptbase = (pde.page_frame << 12) | (((addr >> 12) & 0x3ff) * sizeof(PTE));
+    paddr_t ptbase = (pde.page_frame << 12) | (((addr >> 12) & 0x3ff) << 2);
     PTE pte;
     pte.val = paddr_read(ptbase, sizeof(PTE));
     assert(pte.present);
