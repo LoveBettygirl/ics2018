@@ -31,7 +31,7 @@ void paddr_write(paddr_t addr, int len, uint32_t data) {
 }
 
 bool data_cross_page(vaddr_t addr, int len) {
-  if (((addr & 0xfff) + len) >= 0x1000)
+  if (((addr & 0xfff) + len) > 0x1000)
     return true;
   return false;
 }
