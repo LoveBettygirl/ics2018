@@ -63,15 +63,15 @@ paddr_t page_translate(vaddr_t addr, bool is_write) {
 
 uint32_t vaddr_read(vaddr_t addr, int len) {
   if (data_cross_page(addr, len)) {
-    assert(0);
-    /*int low_len = 0x1000 - (addr & 0xfff);
+    //assert(0);
+    int low_len = 0x1000 - (addr & 0xfff);
     vaddr_t high_vaddr = addr + low_len;
     paddr_t low_paddr = page_translate(addr, false);
     uint32_t data = 0;
     data = paddr_read(low_paddr, low_len);
     paddr_t high_paddr = page_translate(high_vaddr, false);
     data = (paddr_read(high_paddr, len - low_len) << low_len) | data;
-    return data;*/
+    return data;
   }
   else {
     paddr_t paddr = page_translate(addr, false);
@@ -82,14 +82,14 @@ uint32_t vaddr_read(vaddr_t addr, int len) {
 
 void vaddr_write(vaddr_t addr, int len, uint32_t data) {
   if (data_cross_page(addr, len)) {
-    assert(0);
-    /*int low_len = 0x1000 - (addr & 0xfff);
+    //assert(0);
+    int low_len = 0x1000 - (addr & 0xfff);
     int high_len = len - low_len;
     vaddr_t high_vaddr = addr + low_len;
     paddr_t low_paddr = page_translate(addr, true);
     paddr_write(low_paddr, low_len, (data << high_len) >> high_len);
     paddr_t high_paddr = page_translate(high_vaddr, true);
-    paddr_write(high_paddr, high_len, data >> low_len);*/
+    paddr_write(high_paddr, high_len, data >> low_len);
   }
   else {
     paddr_t paddr = page_translate(addr, true);
