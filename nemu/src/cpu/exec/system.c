@@ -20,6 +20,7 @@ make_EHelper(lidt) {
 
 make_EHelper(mov_r2cr) {
   //TODO();
+  printf("mov_r2cr: %d\n", id_dest->reg);
   switch (id_dest->reg) {
     case 0: cpu.cr0.val = id_src->val; break;
     case 3: cpu.cr3.val = id_src->val; break;
@@ -31,6 +32,7 @@ make_EHelper(mov_r2cr) {
 
 make_EHelper(mov_cr2r) {
   //TODO();
+  printf("mov_cr2r: %d\n", id_src->reg);
   switch (id_src->reg) {
     case 0: id_dest->val = cpu.cr0.val; break;
     case 3: id_dest->val = cpu.cr3.val; break;
