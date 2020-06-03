@@ -32,7 +32,7 @@ _RegSet* schedule(_RegSet *prev) {
   current->tf = prev;
   //current = &pcb[0];
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-  static PCB *current_game = NULL;
+  static PCB *current_game = &pcb[0];
   if (current != &pcb[1])
     current_game = current;
   count++;
