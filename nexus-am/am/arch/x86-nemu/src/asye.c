@@ -6,6 +6,7 @@ static _RegSet* (*H)(_Event, _RegSet*) = NULL;
 void vecsys();
 void vecnull();
 void vectrap();
+void vectime();
 
 _RegSet* irq_handle(_RegSet *tf) {
   _RegSet *next = tf;
