@@ -5,6 +5,7 @@
 static PCB pcb[MAX_NR_PROC];
 static int nr_proc = 0;
 PCB *current = NULL;
+int current_game = 0;
 
 uintptr_t loader(_Protect *as, const char *filename);
 
@@ -32,11 +33,8 @@ _RegSet* schedule(_RegSet *prev) {
   current->tf = prev;
   //current = &pcb[0];
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
-  static PCB *current_game = &pcb[0];
-  if (current != &pcb[1])
-    current_game = (current == &pcb[0] ? &pcb[2] : &pcb[0]);
   count++;
-  current = (count % 100 == 0 ? &pcb[1] : current_game);
+  current = (count % 100 == 0 ? &pcb[1] : &pcb[current_game]);
   _switch(&current->as);
   return current->tf;
 }
