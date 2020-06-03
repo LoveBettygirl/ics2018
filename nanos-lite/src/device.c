@@ -8,7 +8,7 @@ static const char *keyname[256] __attribute__((used)) = {
   _KEYS(NAME)
 };
 
-extern int current_game;
+int current_game = 0;
 
 size_t events_read(void *buf, size_t len) {
   int key = _read_key();
