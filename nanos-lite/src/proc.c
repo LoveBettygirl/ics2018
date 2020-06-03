@@ -34,7 +34,7 @@ _RegSet* schedule(_RegSet *prev) {
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
   static PCB *current_game = &pcb[0];
   if (current != &pcb[1])
-    current_game = current;
+    current_game = (current == &pcb[0] ? &pcb[2] : &pcb[0]);
   count++;
   current = (count % 100 == 0 ? &pcb[1] : current_game);
   _switch(&current->as);
