@@ -33,6 +33,7 @@ _RegSet* schedule(_RegSet *prev) {
   current->tf = prev;
   //current = &pcb[0];
   //current = (current == &pcb[0] ? &pcb[1] : &pcb[0]);
+  Log("current_game: %d", current_game);
   count++;
   current = (count % 100 == 0 ? &pcb[1] : &pcb[current_game]);
   _switch(&current->as);
