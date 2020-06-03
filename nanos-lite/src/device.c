@@ -20,8 +20,9 @@ size_t events_read(void *buf, size_t len) {
   if (key != _KEY_NONE) {
     snprintf((char*)buf, len + 1, "%s %s\n", down ? "kd" : "ku", keyname[key]);
     if (key == _KEY_F12 && down) {
-      current_game = (current_game == 0 ? 0 : 2);
+      current_game = (current_game == 0 ? 2 : 0);
       Log("F12");
+      _trap();
     }
   }
   else {
