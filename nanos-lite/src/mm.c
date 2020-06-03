@@ -22,7 +22,7 @@ int mm_brk(uint32_t new_brk) {
   else {
   	if (new_brk > current->max_brk) {
   	  for (uint32_t i = PGROUNDUP(current->max_brk); i < new_brk; i += PGSIZE) {
-  	  	_map(&current->as, (void*)i, new_page);
+  	  	_map(&current->as, (void*)i, new_page());
   	  }
   	  current->max_brk = new_brk;
   	}
