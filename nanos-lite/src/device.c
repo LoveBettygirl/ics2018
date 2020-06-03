@@ -21,7 +21,7 @@ size_t events_read(void *buf, size_t len) {
     snprintf((char*)buf, len + 1, "%s %s\n", down ? "kd" : "ku", keyname[key]);
     if (key == _KEY_F12 && down) {
       current_game = (current_game == 0 ? 0 : 2);
-      _trap();
+      Log("F12");
     }
   }
   else {
