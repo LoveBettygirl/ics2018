@@ -90,7 +90,7 @@ _RegSet *_umake(_Protect *p, _Area ustack, _Area kstack, void *entry, char *cons
   stack++;
   _RegSet *tf = (_RegSet*)((uintptr_t)stack - sizeof(_RegSet));
   // _trap(): trap frame
-  tf->eflags = 0x202;
+  tf->eflags = 0x2 | FL_IF;
   tf->cs = 0x8;
   tf->irq = 0x81;
   tf->error_code = 0;
