@@ -13,7 +13,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
   printf("F_div_F\n");
-  return (a/b) << 16;
+  return (a*b) << 16;
 }
 
 FLOAT f2F(float a) {
