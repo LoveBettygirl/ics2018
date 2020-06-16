@@ -8,7 +8,6 @@ typedef int FLOAT;
 static inline int F2int(FLOAT a) {
   //assert(0);
   //return 0;
-  printf("F2int\n");
   if ((a & 0x80000000) == 0)
     return a >> 16;
   else
@@ -18,7 +17,6 @@ static inline int F2int(FLOAT a) {
 static inline FLOAT int2F(int a) {
   //assert(0);
   //return 0;
-  printf("int2F\n");
   if ((a & 0x80000000) == 0)
     return a << 16;
   else
@@ -28,14 +26,12 @@ static inline FLOAT int2F(int a) {
 static inline FLOAT F_mul_int(FLOAT a, int b) {
   //assert(0);
   //return 0;
-  printf("F_mul_int\n");
   return a*b;
 }
 
 static inline FLOAT F_div_int(FLOAT a, int b) {
   //assert(0);
   //return 0;
-  printf("F_div_int\n");
   return a/b;
 }
 
