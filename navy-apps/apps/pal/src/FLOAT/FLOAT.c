@@ -27,22 +27,28 @@ FLOAT f2F(float a) {
 
   //assert(0);
   //return 0;
-  struct float_ {
-    uint32_t man : 23;
-    uint32_t exp : 8;
-    uint32_t sign : 1;
+  union float_ {
+    struct {
+      uint32_t man : 23;
+      uint32_t exp : 8;
+      uint32_t sign : 1;
+    };
+    uint32_t val;
   };
-  struct float_ *f = (struct float_*)&a;
-  int exp = f->exp - 127;
+  union float_ f;
+  f.val = *((uint32_t*)(void*)&a);
+  int exp = f.exp - 127;
+  FLOAT ret = 0;
   if (exp >= 0) {
     int mov = 7 - exp;
     if (mov >= 0)
-      return ((f->man | (1 << 23)) >> mov) | (f->sign << 31);
+      ret = (f.man | (1 << 23)) >> mov;
     else
-      return ((f->man | (1 << 23)) << (-mov)) | (f->sign << 31);
+      ret = (f.man | (1 << 23)) << (-mov);
   }
   else
     return 0;
+  return f.sign == 0 ? ret : -ret;
 }
 
 FLOAT Fabs(FLOAT a) {
