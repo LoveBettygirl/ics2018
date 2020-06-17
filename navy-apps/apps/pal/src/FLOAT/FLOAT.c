@@ -11,7 +11,8 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
-  return (a*b) << 16;
+  float f = a/b;
+  return f2F(f);
 }
 
 FLOAT f2F(float a) {
