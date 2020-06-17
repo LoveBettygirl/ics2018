@@ -7,7 +7,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
   //return 0;
   int64_t x = a;
   int64_t y = b;
-  FLOAT ret = (a*b) >> 16;
+  FLOAT ret = (x*y) >> 16;
   if (((a ^ b) & 0x80000000) == 0x80000000) {
     ret |= 0x80000000;
   }
@@ -24,7 +24,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
     return 0x7f000000;
   int64_t x = a;
   int64_t y = b;
-  FLOAT ret = (a/b) << 16;
+  FLOAT ret = (x/y) << 16;
   if (((a ^ b) & 0x80000000) == 0x80000000) {
     ret |= 0x80000000;
   }
