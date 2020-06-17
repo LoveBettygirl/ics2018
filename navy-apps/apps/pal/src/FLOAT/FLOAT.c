@@ -21,7 +21,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
   if (b == 0)
-    return 0;
+    return 0x7f000000;
   int64_t x = a;
   int64_t y = b;
   FLOAT ret = (a/b) << 16;
