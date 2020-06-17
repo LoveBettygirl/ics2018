@@ -19,7 +19,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 
   for (int i = 0; i < 16; i++) {
     x <<= 1;
-    ret << 1;
+    ret <<= 1;
     if (x >= y) {
       x -= y;
       ret++;
