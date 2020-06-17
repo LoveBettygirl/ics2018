@@ -5,8 +5,7 @@
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
-  int64_t ret = ((int64_t)a * (int64_t)b) >> 16;
-  return (FLOAT)ret;
+  return ((uint64_t)a * b) >> 16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
