@@ -11,11 +11,9 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
-  printf("aaa\n");
   if (b == 0)
-    printf("bbb\n");
-  float f = (float)a/b;
-  printf("ddd\n");
+    return f2F(0);
+  float f = a/b;
   return f2F(f);
 }
 
@@ -32,7 +30,6 @@ FLOAT f2F(float a) {
 
   //assert(0);
   //return 0;
-  printf("ccc\n");
   union float_ {
     struct {
       uint32_t man : 23;
