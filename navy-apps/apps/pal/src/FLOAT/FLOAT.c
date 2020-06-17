@@ -11,6 +11,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
+  printf("aaa\n")
   float f = a/b;
   return f2F(f);
 }
