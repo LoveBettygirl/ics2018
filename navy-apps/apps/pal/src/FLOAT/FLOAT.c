@@ -5,11 +5,7 @@
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
-  int64_t ret = ((int64_t)Fabs(a) * (int64_t)Fabs(b)) >> 16;
-  if (((a ^ b) & 0x80000000) == 0x80000000) {
-    ret = -ret;
-  }
-  return (FLOAT)ret;
+  return ((int64_t)a * (int64_t)b) >> 16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
