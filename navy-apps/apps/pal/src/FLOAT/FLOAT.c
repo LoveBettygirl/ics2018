@@ -5,16 +5,16 @@
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
-  return ((uint64_t)a * b) >> 16;
+  return ((int64_t)a * (int64_t)b) >> 16;
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
   assert(b != 0);
-  int64_t x = (int64_t)Fabs(a) << 16;
-  int64_t y = (int64_t)Fabs(b);
-  int64_t ret = 0;
+  int64_t x = Fabs(a) << 16;
+  int64_t y = Fabs(b);
+  FLOAT ret = 0;
 
   for (int i = 31; i >= 0; i--) {
     int64_t t = y * (1 << i);
@@ -26,7 +26,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   if (((a ^ b) & 0x80000000) == 0x80000000) {
     ret = -ret;
   }
-  return (FLOAT)ret;
+  return ret;
 }
 
 FLOAT f2F(float a) {
