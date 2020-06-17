@@ -12,13 +12,13 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
   assert(b != 0);
-  int64_t x = Fabs(a);
-  int64_t y = Fabs(b);
+  FLOAT x = Fabs(a);
+  FLOAT y = Fabs(b);
   x = x * 0x10000;
   FLOAT ret = 0;
 
   for (int i = 31; i >= 0; i--) {
-    int64_t t = y * (1 << i);
+    FLOAT t = y * (1 << i);
     if (t <= x) {
       x -= t;
       ret += (1 << i);
