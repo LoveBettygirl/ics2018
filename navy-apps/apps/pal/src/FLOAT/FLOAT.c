@@ -31,7 +31,6 @@ FLOAT f2F(float a) {
 
   //assert(0);
   //return 0;
-  printf("aaa\n");
   union float_ {
     struct {
       uint32_t man : 23;
