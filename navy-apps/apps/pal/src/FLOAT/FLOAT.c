@@ -24,7 +24,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   int64_t ret = 0;
 
   for (int i = 31; i >= 0; i--) {
-    int64_t t = y * (1 << i);
+    int64_t t = y << (int64_t)i;
     if (t <= x) {
       x -= t;
       ret += (1 << i);
