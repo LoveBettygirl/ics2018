@@ -23,7 +23,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   int64_t y = (int64_t)Fabs(b);
   int64_t ret = 0;
 
-  for (int i = 31; i >= 0; i --) {
+  for (int i = 31; i >= 0; i--) {
     int64_t t = y << i;
     if (t <= x) {
       x -= t;
