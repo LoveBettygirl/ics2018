@@ -12,7 +12,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
   printf("aaa\n");
-  float f = a/b;
+  float f = (float)a/(float)b;
   return f2F(f);
 }
 
