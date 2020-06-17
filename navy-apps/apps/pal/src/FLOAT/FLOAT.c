@@ -14,7 +14,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   printf("aaa\n");
   if (b == 0)
     printf("bbb\n");
-  float f = a/b;
+  float f = (float)a/b;
   return f2F(f);
 }
 
