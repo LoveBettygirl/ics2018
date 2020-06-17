@@ -141,7 +141,7 @@ make_EHelper(shld) {
 
   rtl_update_ZFSF(&t0, id_dest->width);
 
-  print_asm_template2(shld);
+  print_asm_template3(shld);
 }
 
 make_EHelper(shrd) {
@@ -157,5 +157,5 @@ make_EHelper(shrd) {
 
   rtl_update_ZFSF(&t0, id_dest->width);
 
-  print_asm_template2(shrd);
+  print_asm_template3(shrd);
 }

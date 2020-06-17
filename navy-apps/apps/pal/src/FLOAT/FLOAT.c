@@ -56,6 +56,8 @@ FLOAT f2F(float a) {
   f.val = *((uint32_t*)(void*)&a);
   int exp = f.exp - 127;
   FLOAT ret = 0;
+  if (exp == 128)
+    assert(0);
   if (exp >= 0) {
     int mov = 7 - exp;
     if (mov >= 0)
