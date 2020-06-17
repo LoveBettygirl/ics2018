@@ -45,6 +45,7 @@ FLOAT f2F(float a) {
   int exp = f.exp - 127;
   FLOAT ret = 0;
   if (exp >= 0) {
+    printf("ddd\n");
     int mov = 7 - exp;
     if (mov >= 0)
       ret = (f.man | (1 << 23)) >> mov;
