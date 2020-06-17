@@ -52,6 +52,7 @@ FLOAT f2F(float a) {
   }
   else
     return 0;
+  printf("ccc\n");
   return f.sign == 0 ? ret : -ret;
 }
 
