@@ -13,9 +13,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   //return 0;
   if (b == 0)
     return f2F(0);
-  float f = a/b;
-  printf("bbb\n");
-  return f2F(f);
+  return f2F(a/b);
 }
 
 FLOAT f2F(float a) {
@@ -44,7 +42,6 @@ FLOAT f2F(float a) {
   int exp = f.exp - 127;
   FLOAT ret = 0;
   if (exp >= 0) {
-    printf("ddd\n");
     int mov = 7 - exp;
     if (mov >= 0)
       ret = (f.man | (1 << 23)) >> mov;
@@ -53,7 +50,6 @@ FLOAT f2F(float a) {
   }
   else
     return 0;
-  printf("ccc\n");
   return f.sign == 0 ? ret : -ret;
 }
 
