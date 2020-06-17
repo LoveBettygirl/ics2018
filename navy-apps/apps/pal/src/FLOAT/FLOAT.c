@@ -14,14 +14,15 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   assert(b != 0);
   FLOAT x = Fabs(a);
   FLOAT y = Fabs(b);
-  x = x * 0x10000;
-  FLOAT ret = 0;
+  FLOAT ret = x / y;
+  x = x % y;
 
-  for (int i = 31; i >= 0; i--) {
-    FLOAT t = y * (1 << i);
-    if (t <= x) {
-      x -= t;
-      ret += (1 << i);
+  for (int i = 0; i < 16; i++) {
+    x <<= 1;
+    ret << 1;
+    if (x <= y) {
+      x -= y;
+      ret++;
     }
   }
   if (((a ^ b) & 0x80000000) == 0x80000000) {
