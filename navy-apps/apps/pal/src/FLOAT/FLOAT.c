@@ -12,9 +12,8 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
   if (b == 0)
-    return f2F(0);
-  FLOAT f = a/b;
-  return f2F(*((float*)&f));
+    return 0;
+  return (a/b) << 16;
 }
 
 FLOAT f2F(float a) {
