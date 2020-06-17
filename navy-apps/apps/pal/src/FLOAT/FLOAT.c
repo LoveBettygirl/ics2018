@@ -5,7 +5,7 @@
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
   //assert(0);
   //return 0;
-  FLOAT ret = ((int64_t)a * b) >> 16;
+  FLOAT ret = ((uint64_t)a * b) >> 16;
   if (((a ^ b) & 0x80000000) == 0x80000000) {
     ret |= 0x80000000;
   }
